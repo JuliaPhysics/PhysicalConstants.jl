@@ -1,0 +1,8 @@
+name = "Constants"
+uuid = "b90ada1e-a8b0-11e8-1f6b-d19a860377b8"
+authors = ["Mosè Giordano <mose@gnu.org>"]
+version = "0.1.0"
+
+[deps]
+Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
