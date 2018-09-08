@@ -21,8 +21,9 @@ export α, a_0, atm, b, c, ε_0, e, G, g_n, h, ħ, k_B, µ_0, µ_B, m_e, m_n, m_
           0.0, BigFloat(0), "CODATA 2014")
 @constant(µ_0, "Magnetic constant", 1.2566370614359173e-6, 4*big(pi)/BigFloat(10_000_000),
           u"N * A^-2", 0.0, BigFloat(0.0), "CODATA 2014")
-@constant(ε_0, "Electric constant", 8.854187817620389e-12, ustrip(inv(big(µ_0) * big(c)^2)),
-          u"F * m^-1", 0.0, BigFloat(0.0), "CODATA 2014")
+@constant(ε_0, "Electric constant", 8.854187817620389e-12,
+          inv(ustrip(big(µ_0)) * ustrip(big(c))^2), u"F * m^-1",
+          0.0, BigFloat(0.0), "CODATA 2014")
 @constant(e, "Elementary charge", 1.602_176_6208e-19,
           big(16_021_766_208)/100_000_000_000_000_000_000_000_000_000,
           u"C", 9.8e-28, big(98)/100_000_000_000_000_000_000_000_000_000, "CODATA 2014")
