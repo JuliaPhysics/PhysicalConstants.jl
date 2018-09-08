@@ -2,6 +2,8 @@ module Constants
 
 using Measurements, Unitful
 
+import Measurements: value, uncertainty
+
 struct Constant{sym} <: Number end
 
 function name end
@@ -65,8 +67,10 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
         @assert isa(ustrip(measurement($esym)), Measurement{Float64})
         @assert ustrip(float(Float64, $esym)) == Float64(ustrip(big($esym)))
         @assert ustrip(float(Float32, $esym)) == Float32(ustrip(big($esym)))
-        @assert Float64(ustrip(measurement(BigFloat, $esym)).err) ==
-            ustrip(measurement($esym)).err
+        @assert Float64(value(ustrip(measurement(BigFloat, $esym)))) ==
+            value(ustrip(measurement($esym)))
+        @assert Float64(uncertainty(ustrip(measurement(BigFloat, $esym)))) ==
+            uncertainty(ustrip(measurement($esym)))
     end
 end
 
@@ -107,18 +111,23 @@ macro derived_constant(sym, name, val, def, unit, measure64, measurebig, referen
         @assert isa(ustrip(measurement($esym)), Measurement{Float64})
         @assert ustrip(float(Float64, $esym)) == Float64(ustrip(big($esym)))
         @assert ustrip(float(Float32, $esym)) == Float32(ustrip(big($esym)))
-        @assert Float64(ustrip(measurement(BigFloat, $esym)).err) ==
-            ustrip(measurement($esym)).err
+        @assert Float64(value(ustrip(measurement(BigFloat, $esym)))) ==
+            value(ustrip(measurement($esym)))
+        @assert Float64(uncertainty(ustrip(measurement(BigFloat, $esym)))) ==
+            uncertainty(ustrip(measurement($esym)))
     end
 end
 
 function Base.show(io::IO, x::Constant{sym}) where sym
     println(io, "$(name(x)) ($sym)")
     println(io, "Value                         = ", float(x))
-    println(io, "Standard uncertainty          = ", iszero(ustrip(measurement(x)).err) ? "(exact)" :
-            ustrip(measurement(x)).err * unit(x))
-    println(io, "Relative standard uncertainty = ", iszero(ustrip(measurement(x)).err) ? "(exact)" :
-            round(ustrip(measurement(x)).err/ustrip(measurement(x)).val, sigdigits=2))
+    println(io, "Standard uncertainty          = ",
+            iszero(uncertainty(ustrip(measurement(x)))) ? "(exact)" :
+            uncertainty(ustrip(measurement(x))) * unit(x))
+    println(io, "Relative standard uncertainty = ",
+            iszero(uncertainty(ustrip(measurement(x)))) ? "(exact)" :
+            round(uncertainty(ustrip(measurement(x)))/value(ustrip(measurement(x))),
+                  sigdigits=2))
     print(io,   "Reference                     = ", ref(x))
 end
 
