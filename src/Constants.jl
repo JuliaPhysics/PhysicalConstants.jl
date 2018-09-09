@@ -137,6 +137,58 @@ function Base.show(io::IO, x::Constant{sym}) where sym
     print(io,   "Reference                     = ", ref(x))
 end
 
+"""
+    float(::Constant{symbol})
+    float(FloatType, ::Constant{symbol})
+
+Return the physical constant as a `Quantity` with the floating type optionally specified by
+`FloatType`, `Float64` by default.
+
+```jldoctest
+julia> using Constants.CODATA2014
+
+julia> G
+Newtonian constant of gravitation (G)
+Value                         = 6.67408e-11 m^3 kg^-1 s^-2
+Standard uncertainty          = 3.1e-15 m^3 kg^-1 s^-2
+Relative standard uncertainty = 4.6e-5
+Reference                     = CODATA 2014
+
+julia> float(G)
+6.67408e-11 m^3 kg^-1 s^-2
+
+julia> float(Float32, G)
+6.67408f-11 m^3 kg^-1 s^-2
+```
+"""
+float(::Constant)
+
+"""
+    measurement(::Constant{symbol})
+    measurement(FloatType, ::Constant{symbol})
+
+Return the physical constant as a `Quantity` with standard uncertainty.  The floating-point
+precision can be optionally specified with the `FloatType`, `Float64` by default.
+
+```jldoctest
+julia> using Constants.CODATA2014, Measurements
+
+julia> h
+Planck constant (h)
+Value                         = 6.62607004e-34 J s
+Standard uncertainty          = 8.1e-42 J s
+Relative standard uncertainty = 1.2e-8
+Reference                     = CODATA 2014
+
+julia> measurement(h)
+6.62607004e-34 ± 8.1e-42 J s
+
+julia> measurement(Float32, h)
+6.62607e-34 ± 8.1e-42 J s
+```
+"""
+measurement(::Constant)
+
 include("codata2014.jl")
 
 end # module
