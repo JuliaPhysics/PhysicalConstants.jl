@@ -117,6 +117,7 @@ macro derived_constant(sym, name, val, def, unit, measure64, measurebig, referen
             value(ustrip(measurement($esym)))
         @assert Float64(uncertainty(ustrip(measurement(BigFloat, $esym)))) ==
             uncertainty(ustrip(measurement($esym)))
+        @assert ustrip(big($esym)) == value(ustrip(measurement(BigFloat, $esym)))
     end
 end
 

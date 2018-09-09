@@ -35,7 +35,7 @@ import Constants: @constant, @derived_constant
           u"J*s", 8.1e-42, 81/10_000_000_000_000_000_000_000_000_000_000_000_000_000_000,
           "CODATA 2014")
 @derived_constant(ħ, "Planck constant over 2pi", 1.0545718001391127e-34,
-                  big(h)/2pi, u"J*s", measurement(h)/2pi,
+                  ustrip(big(h))/(2 * big(pi)), u"J*s", measurement(h)/2pi,
                   measurement(BigFloat, h)/(2 * big(pi)), "CODATA 2014")
 @constant(k_B, "Boltzmann constant", 1.380_648_52e-23,
           BigFloat(138_064_852)/BigFloat(10_000_000_000_000_000_000_000_000_000_000), u"J * K^-1",
