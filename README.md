@@ -38,6 +38,7 @@ List of Constants
 <!-- import Constants: Constant, name -->
 <!-- symbol(::Constant{sym}) where sym = sym -->
 <!-- println("| Symbol | Name | Value | Unit |") -->
+<!-- println("| ------ | ---- | ----- | ---- |") -->
 <!-- for c in getfield.(Ref(CODATA2014), names(CODATA2014)) -->
 <!--     if c isa Constant -->
 <!--         println("| `", symbol(c), "` | ", name(c), " | ", ustrip(float(c)), " | ", -->
@@ -46,6 +47,7 @@ List of Constants
 <!-- end -->
 
 | Symbol | Name                                      | Value                  | Unit             |
+| ------ | ----                                      | -----                  | ----             |
 | `G`    | Newtonian constant of gravitation         | 6.67408e-11            | `m^3 kg^-1 s^-2` |
 | `N_A`  | Avogadro constant                         | 6.022140857e23         | `mol^-1`         |
 | `R`    | Molar gas constant                        | 8.3144598              | `J K^-1 mol^-1`  |
