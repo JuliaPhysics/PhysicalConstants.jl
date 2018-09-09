@@ -101,6 +101,8 @@ macro derived_constant(sym, name, val, def, unit, measure64, measurebig, referen
 
         Measurements.measurement(::Type{Float64}, ::Constant{$qsym}) = $(esc(measure64))
         Measurements.measurement(::Type{BigFloat}, ::Constant{$qsym}) = $(esc(measurebig))
+        Measurements.measurement(FT::DataType, x::Constant{$qsym}) =
+            convert(Measurement{FT}, ustrip(measurement(x))) * $eunit
         Measurements.measurement(::Constant{$qsym}) = measurement(Float64, $esym)
 
         Constants.name(::Constant{$qsym})    = $name
@@ -111,6 +113,7 @@ macro derived_constant(sym, name, val, def, unit, measure64, measurebig, referen
         @assert isa(ustrip(float($esym)), Float64)
         @assert isa(ustrip(big($esym)), BigFloat)
         @assert isa(ustrip(measurement($esym)), Measurement{Float64})
+        @assert isa(ustrip(measurement(Float32, $esym)), Measurement{Float32})
         @assert ustrip(float(Float64, $esym)) == Float64(ustrip(big($esym)))
         @assert ustrip(float(Float32, $esym)) == Float32(ustrip(big($esym)))
         @assert Float64(value(ustrip(measurement(BigFloat, $esym)))) ==
