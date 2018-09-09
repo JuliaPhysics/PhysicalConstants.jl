@@ -1,8 +1,8 @@
 module CODATA2014
 
-using Constants, Unitful, Measurements
+using PhysicalConstants, Unitful, Measurements
 
-import Constants: @constant, @derived_constant
+import PhysicalConstants: @constant, @derived_constant
 
 @constant(α, "Fine-structure constant", 7.297_352_5664e-3,
           BigFloat(72_973_525_664)/BigFloat(10_000_000_000_000), Unitful.NoUnits,

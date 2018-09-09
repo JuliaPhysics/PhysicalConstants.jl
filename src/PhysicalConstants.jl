@@ -1,4 +1,4 @@
-module Constants
+module PhysicalConstants
 
 using Measurements, Unitful
 
@@ -58,8 +58,8 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
         end
         Measurements.measurement(::Constant{$qsym}) = measurement(Float64, $esym)
 
-        Constants.name(::Constant{$qsym})    = $name
-        Constants.ref(::Constant{$qsym})     = $reference
+        PhysicalConstants.name(::Constant{$qsym})    = $name
+        PhysicalConstants.ref(::Constant{$qsym})     = $reference
         Unitful.unit(::Constant{$qsym})      = $unit
         Unitful.dimension(::Constant{$qsym}) = Unitful.dimension($unit)
 
@@ -105,8 +105,8 @@ macro derived_constant(sym, name, val, def, unit, measure64, measurebig, referen
             convert(Measurement{FT}, ustrip(measurement(x))) * $eunit
         Measurements.measurement(::Constant{$qsym}) = measurement(Float64, $esym)
 
-        Constants.name(::Constant{$qsym})    = $name
-        Constants.ref(::Constant{$qsym})     = $reference
+        PhysicalConstants.name(::Constant{$qsym})    = $name
+        PhysicalConstants.ref(::Constant{$qsym})     = $reference
         Unitful.unit(::Constant{$qsym})      = $unit
         Unitful.dimension(::Constant{$qsym}) = Unitful.dimension($unit)
 
@@ -145,7 +145,7 @@ Return the physical constant as a `Quantity` with the floating type optionally s
 `FloatType`, `Float64` by default.
 
 ```jldoctest
-julia> using Constants.CODATA2014
+julia> using PhysicalConstants.CODATA2014
 
 julia> G
 Newtonian constant of gravitation (G)
@@ -171,7 +171,7 @@ Return the physical constant as a `Quantity` with standard uncertainty.  The flo
 precision can be optionally specified with the `FloatType`, `Float64` by default.
 
 ```jldoctest
-julia> using Constants.CODATA2014, Measurements
+julia> using PhysicalConstants.CODATA2014, Measurements
 
 julia> h
 Planck constant (h)

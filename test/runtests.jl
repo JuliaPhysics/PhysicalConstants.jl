@@ -1,7 +1,7 @@
-using Constants, Measurements, Unitful
+using PhysicalConstants, Measurements, Unitful
 using Test
 
-using Constants.CODATA2014
+using PhysicalConstants.CODATA2014
 
 @testset begin
     @test ustrip(big(h)) == big"6.626070040e-34"

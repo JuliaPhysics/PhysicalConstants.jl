@@ -1,9 +1,9 @@
-# Constants.jl
+# PhysicalConstants.jl
 
 Introduction
 ------------
 
-`Constants.jl` provides common physical constants.  They are defined as
+`PhysicalConstants.jl` provides common physical constants.  They are defined as
 `Constant` objects, which can be turned into `Quantity` objects (from
 [`Unitful.jl`](https://github.com/ajkeller34/Unitful.jl) package) or
 `Measurement` objects (from
@@ -24,19 +24,19 @@ installed with
 In a Julia session run the command
 
 ```julia
-pkg> add https://github.com/JuliaPhysics/Constants.jl
+pkg> add https://github.com/JuliaPhysics/PhysicalConstants.jl
 ```
 
 Usage
 -----
 
-You can load the package as usual with `using Constants` but this module does
-not provide anything useful for the end-users.  You most probably want to
+You can load the package as usual with `using PhysicalConstants` but this module
+does not provide anything useful for the end-users.  You most probably want to
 directly load the submodule with the dataset you are interested in.  For
-example, for CODATA 2014 load `Constants.CODATA2014`:
+example, for CODATA 2014 load `PhysicalConstants.CODATA2014`:
 
 ```julia
-julia> using Constants.CODATA2014
+julia> using PhysicalConstants.CODATA2014
 
 julia> c
 Speed of light in vacuum (c)
@@ -53,8 +53,9 @@ Relative standard uncertainty = 4.6e-5
 Reference                     = CODATA 2014
 ```
 
-`c` and `G` are two of the `Constant`s defined in the `Constants.CODATA2014`
-module, the full list of available constants is given below.
+`c` and `G` are two of the `Constant`s defined in the
+`PhysicalConstants.CODATA2014` module, the full list of available constants is
+given below.
 
 You can turn a `Constant` into a `Quantity` object, with physical units, by
 using `float(x)`:
@@ -105,8 +106,8 @@ julia> measurement(BigFloat, ħ) / (measurement(BigFloat, h) / (2 * big(pi)))
 List of Constants
 -----------------
 
-<!-- using Constants.CODATA2014, Unitful -->
-<!-- import Constants: Constant, name -->
+<!-- using PhysicalConstants.CODATA2014, Unitful -->
+<!-- import PhysicalConstants: Constant, name -->
 <!-- symbol(::Constant{sym}) where sym = sym -->
 <!-- println("| Symbol | Name | Value | Unit |") -->
 <!-- println("| ------ | ---- | ----- | ---- |") -->
@@ -149,5 +150,5 @@ List of Constants
 License
 -------
 
-The `Constants.jl` package is licensed under the MIT "Expat" License.  The
-original author is [Mosè Giordano](https://github.com/giordano/).
+The `PhysicalConstants.jl` package is licensed under the MIT "Expat" License.
+The original author is [Mosè Giordano](https://github.com/giordano/).

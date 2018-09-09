@@ -1,4 +1,4 @@
-The Constants.jl package is licensed under the MIT "Expat" License:
+The PhysicalConstants.jl package is licensed under the MIT "Expat" License:
 
 > Copyright (c) 2018: Mosè Giordano.
 >
