@@ -26,6 +26,7 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
     end
     quote
         const $esym = Constant{$qsym}()
+        export $esym
         Base.float(::Constant{$qsym}) = $val * $unit
         Base.float(FT::DataType, ::Constant{$qsym}) = FT($val) * $eunit
         $_bigconvert
@@ -91,6 +92,7 @@ macro derived_constant(sym, name, val, def, unit, measure64, measurebig, referen
     end
     quote
         const $esym = Constant{$qsym}()
+        export $esym
         Base.float(::Constant{$qsym}) = $val * $unit
         Base.float(FT::DataType, ::Constant{$qsym}) = FT($val) * $eunit
         $_bigconvert

@@ -4,8 +4,6 @@ using Constants, Unitful, Measurements
 
 import Constants: @constant, @derived_constant
 
-export α, a_0, atm, b, c, ε_0, e, G, g_n, h, ħ, k_B, µ_0, µ_B, m_e, m_n, m_p, N_A, R, R_∞, σ, σ_e
-
 @constant(α, "Fine-structure constant", 7.297_352_5664e-3,
           BigFloat(72_973_525_664)/BigFloat(10_000_000_000_000), Unitful.NoUnits,
           1.7e-12, BigFloat(17)/BigFloat(10_000_000_000_000), "CODATA 2014")
