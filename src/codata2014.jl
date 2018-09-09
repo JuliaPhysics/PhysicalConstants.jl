@@ -59,6 +59,11 @@ import Constants: @constant, @derived_constant
           u"kg", 2.1e-35,
           BigFloat(21)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000),
           "CODATA 2014")
+@constant(m_u, "Atomic mass constant", 1.660_539_040e-27,
+          BigFloat(1660_539_040)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000),
+          u"kg", 2.0e-35,
+          BigFloat(20)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000),
+          "CODATA 2014")
 @constant(N_A, "Avogadro constant", 6.022_140_857e23,
           BigFloat(602_214_085_700_000_000_000_000), u"mol^-1",
           7.4e15, BigFloat(7_400_000_000_000_000), "CODATA 2014")
@@ -75,8 +80,5 @@ import Constants: @constant, @derived_constant
           u"m^2", 9.1e-38,
           BigFloat(91)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000_000),
           "CODATA 2014")
-
-
-
 
 end

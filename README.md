@@ -65,6 +65,7 @@ List of Constants
 | `m_e`  | Electron mass                             | 9.10938356e-31         | `kg`             |
 | `m_n`  | Neutron mass                              | 1.674927471e-27        | `kg`             |
 | `m_p`  | Protron mass                              | 1.672621898e-27        | `kg`             |
+| `m_u`  | Atomic mass constant                      | 1.66053904e-27         | `kg`             |
 | `ħ`    | Planck constant over 2pi                  | 1.0545718001391127e-34 | `J s`            |
 | `α`    | Fine-structure constant                   | 0.0072973525664        |                  |
 | `ε_0`  | Electric constant                         | 8.854187817620389e-12  | `F m^-1`         |
