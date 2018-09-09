@@ -80,5 +80,8 @@ import Constants: @constant, @derived_constant
           u"m^2", 9.1e-38,
           BigFloat(91)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000_000),
           "CODATA 2014")
+@constant(Z_0, "Characteristic impedance of vacuum", 376.73031346177066,
+          BigFloat(1199_169_832)/BigFloat(10_000_000) * big(pi), u"Ω",
+          0, BigFloat(0.0), "CODATA 2014")
 
 end

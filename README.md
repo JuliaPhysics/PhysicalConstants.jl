@@ -125,6 +125,7 @@ List of Constants
 | `N_A`  | Avogadro constant                         | 6.022140857e23         | `mol^-1`         |
 | `R`    | Molar gas constant                        | 8.3144598              | `J K^-1 mol^-1`  |
 | `R_∞`  | Rydberg constant                          | 1.0973731568508e7      | `m^-1`           |
+| `Z_0`  | Characteristic impedance of vacuum        | 376.73031346177066     | `Ω`              |
 | `a_0`  | Bohr radius                               | 5.2917721067e-11       | `m`              |
 | `atm`  | Standard atmosphere                       | 101325.0               | `Pa`             |
 | `b`    | Wien wavelength displacement law constant | 0.0028977729           | `K m`            |
