@@ -46,6 +46,8 @@ List of Constants
 <!--     end -->
 <!-- end -->
 
+### CODATA 2014
+
 | Symbol | Name                                      | Value                  | Unit             |
 | ------ | ----                                      | -----                  | ----             |
 | `G`    | Newtonian constant of gravitation         | 6.67408e-11            | `m^3 kg^-1 s^-2` |
@@ -57,7 +59,7 @@ List of Constants
 | `b`    | Wien wavelength displacement law constant | 0.0028977729           | `K m`            |
 | `c`    | Speed of light in vacuum                  | 2.99792458e8           | `m s^-1`         |
 | `e`    | Elementary charge                         | 1.6021766208e-19       | `C`              |
-| `g_n`  | Standard acceleration of gravitaty        | 9.80665                | `m s^-2`         |
+| `g_n`  | Standard acceleration of gravitation      | 9.80665                | `m s^-2`         |
 | `h`    | Planck constant                           | 6.62607004e-34         | `J s`            |
 | `k_B`  | Boltzmann constant                        | 1.38064852e-23         | `J K^-1`         |
 | `m_e`  | Electron mass                             | 9.10938356e-31         | `kg`             |

@@ -28,7 +28,7 @@ import Constants: @constant, @derived_constant
 @constant(G, "Newtonian constant of gravitation", 6.674_08e-11,
           big(667_408)/big(10_000_000_000_000_000), u"m^3 * kg^-1 * s^-2",
           3.1e-15, big(31)/big(10_000_000_000_000_000), "CODATA 2014")
-@constant(g_n, "Standard acceleration of gravitaty", 9.806_65, big(980_665)/big(100_000),
+@constant(g_n, "Standard acceleration of gravitation", 9.806_65, big(980_665)/big(100_000),
           u"m * s^-2", 0, 0, "CODATA 2014")
 @constant(h, "Planck constant", 6.626_070_040e-34,
           6_626_070_040/10_000_000_000_000_000_000_000_000_000_000_000_000_000_000,
