@@ -3,6 +3,9 @@ module PhysicalConstants
 using Measurements, Unitful
 
 import Measurements: value, uncertainty
+# TODO: I need to find a better way than importing the units twice, but at least works and
+# precompilation isn't broken.
+import Unitful: Ω, A, C, F, J, kg, K, m, mol, N, Pa, s, T
 
 struct Constant{sym} <: Number end
 
