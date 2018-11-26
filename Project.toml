@@ -1,4 +1,13 @@
+name = "PhysicalConstants"
+uuid = "22bc3fda-1b12-5c11-b0b3-b0f5dbbb7b47"
+authors = ["Mosè Giordano <mose@gnu.org>"]
+
 [deps]
 Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
-PhysicalConstants = "22bc3fda-1b12-5c11-b0b3-b0f5dbbb7b47"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
