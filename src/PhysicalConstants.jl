@@ -3,9 +3,6 @@ module PhysicalConstants
 using Measurements, Unitful
 
 import Measurements: value, uncertainty
-# TODO: I need to find a better way than importing the units twice, but at least works and
-# precompilation isn't broken.
-import Unitful: Ω, A, C, F, J, kg, K, m, mol, N, Pa, s, T
 
 struct Constant{sym} <: Number end
 
@@ -30,7 +27,7 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
     quote
         const $esym = Constant{$qsym}()
         export $esym
-        Base.float(::Constant{$qsym}) = $val * $unit
+        Base.float(::Constant{$qsym}) = $val * $eunit
         Base.float(FT::DataType, ::Constant{$qsym}) = FT($val) * $eunit
         $_bigconvert
         Base.big(x::Constant{$qsym}) = _big(x) * $eunit
@@ -40,11 +37,11 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
             vl = FT($val)
             newder = Measurements.empty_der2(vl)
             if iszero($unc)
-                return Measurement{FT}(vl, FT($unc), UInt64(0), newder) * $unit
+                return Measurement{FT}(vl, FT($unc), UInt64(0), newder) * $eunit
             else
                 return Measurement{FT}(vl, FT($unc), $tag,
                                        Measurements.Derivatives(newder,
-                                                                (vl, $unc, $tag)=>one(FT))) * $unit
+                                                                (vl, $unc, $tag)=>one(FT))) * $eunit
             end
         end
         function Measurements.measurement(::Type{BigFloat}, x::Constant{$qsym})
@@ -52,19 +49,19 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
             unc = BigFloat($bigunc)
             newder = Measurements.empty_der2(vl)
             if iszero($unc)
-                return Measurement{BigFloat}(vl, unc, UInt64(0), newder) * $unit
+                return Measurement{BigFloat}(vl, unc, UInt64(0), newder) * $eunit
             else
                 return Measurement{BigFloat}(vl, unc, $tag,
                                              Measurements.Derivatives(newder,
-                                                                      (vl, unc, $tag)=>one(BigFloat))) * $unit
+                                                                      (vl, unc, $tag)=>one(BigFloat))) * $eunit
             end
         end
         Measurements.measurement(::Constant{$qsym}) = measurement(Float64, $esym)
 
         PhysicalConstants.name(::Constant{$qsym})    = $name
         PhysicalConstants.ref(::Constant{$qsym})     = $reference
-        Unitful.unit(::Constant{$qsym})      = $unit
-        Unitful.dimension(::Constant{$qsym}) = Unitful.dimension($unit)
+        Unitful.unit(::Constant{$qsym})      = $eunit
+        Unitful.dimension(::Constant{$qsym}) = Unitful.dimension($eunit)
 
         @assert isa(ustrip(float($esym)), Float64)
         @assert isa(ustrip(big($esym)), BigFloat)
@@ -96,7 +93,7 @@ macro derived_constant(sym, name, val, def, unit, measure64, measurebig, referen
     quote
         const $esym = Constant{$qsym}()
         export $esym
-        Base.float(::Constant{$qsym}) = $val * $unit
+        Base.float(::Constant{$qsym}) = $val * $eunit
         Base.float(FT::DataType, ::Constant{$qsym}) = FT($val) * $eunit
         $_bigconvert
         Base.big(x::Constant{$qsym}) = _big(x) * $eunit
@@ -110,8 +107,8 @@ macro derived_constant(sym, name, val, def, unit, measure64, measurebig, referen
 
         PhysicalConstants.name(::Constant{$qsym})    = $name
         PhysicalConstants.ref(::Constant{$qsym})     = $reference
-        Unitful.unit(::Constant{$qsym})      = $unit
-        Unitful.dimension(::Constant{$qsym}) = Unitful.dimension($unit)
+        Unitful.unit(::Constant{$qsym})      = $eunit
+        Unitful.dimension(::Constant{$qsym}) = Unitful.dimension($eunit)
 
         @assert isa(ustrip(float($esym)), Float64)
         @assert isa(ustrip(big($esym)), BigFloat)
