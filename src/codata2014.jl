@@ -1,8 +1,8 @@
 module CODATA2014
 
-using PhysicalConstants, Measurements
-using Unitful: Ω, A, C, F, J, kg, K, m, mol, N, Pa, s, T
+using PhysicalConstants, Measurements, Unitful
 
+import Unitful: Ω, A, C, F, J, kg, K, m, mol, N, Pa, s, T
 import PhysicalConstants: @constant, @derived_constant
 
 @constant(α, "Fine-structure constant", 7.297_352_5664e-3,
