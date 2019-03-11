@@ -4,9 +4,9 @@ Introduction
 ------------
 
 `PhysicalConstants.jl` provides common physical constants.  They are defined as
-`Constant` objects, which can be turned into `Quantity` objects (from
-[`Unitful.jl`](https://github.com/ajkeller34/Unitful.jl) package) or
-`Measurement` objects (from
+instances of the new `Constant` type, which is subtype of `AbstractQuantity`
+(from [`Unitful.jl`](https://github.com/ajkeller34/Unitful.jl) package) and can
+also be turned into `Measurement` objects (from
 [`Measurements.jl`](https://github.com/JuliaPhysics/Measurements.jl) package) at
 request.
 
@@ -18,10 +18,10 @@ fundamental physical constants is provided.
 Installation
 ------------
 
-`Measurements.jl` is available for Julia 0.7 and later versions, and can be
-installed with
-[Julia built-in package manager](http://docs.julialang.org/en/stable/manual/packages/).
-In a Julia session run the command
+The latest version of `PhysicalConstants.jl` is available for Julia 1.0 and
+later versions, and can be installed with [Julia built-in package
+manager](https://julialang.github.io/Pkg.jl/stable/).  After entering the
+package manager mode by pressing `]`, run the command
 
 ```julia
 pkg> add https://github.com/JuliaPhysics/PhysicalConstants.jl
@@ -57,16 +57,19 @@ Reference                     = CODATA 2014
 `PhysicalConstants.CODATA2014` module, the full list of available constants is
 given below.
 
-You can turn a `Constant` into a `Quantity` object, with physical units, by
-using `float(x)`:
+`Constant`s can be readily used in mathematical operations, using by default
+their `Float64` value:
 
 ```julia
-julia> float(ε_0)
-8.854187817620389e-12 F m^-1
+julia> 2 * ε_0
+1.7708375635240778e-11 F m^-1
+
+julia> ε_0 - 1 / (μ_0 * c ^ 2)
+0.0 A^2 s^4 kg^-1 m^-3
 ```
 
-You can optionally specify the floating-point precision of the resulting number,
-this package takes care of keeping the value accurate also with `BigFloat`:
+If you want to use a different precision for the value of the constant, use the
+function `float(float_type, constant)`, for example:
 
 ```julia
 julia> float(Float32, ε_0)
@@ -82,7 +85,7 @@ julia> big(ε_0) - inv(big(μ_0) * big(c)^2)
 0.0 A^2 s^4 kg^-1 m^-3
 ```
 
-Note that `big(x)` is an alias for `float(BigFloat, x)`.
+Note that `big(constant)` is an alias for `float(BigFloat, constant)`.
 
 If in addition to units you also want the standard uncertainty associated with
 the constant, use `measurement(x)`:
