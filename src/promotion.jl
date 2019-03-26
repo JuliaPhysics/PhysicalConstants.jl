@@ -1,15 +1,15 @@
-Base.promote_rule(::Type{Constant{sym,S,D,SU}}, ::Type{Quantity{T,D,TU}}) where {sym,S,T,D,SU,TU} =
+Base.promote_rule(::Type{Constant{name,S,D,SU}}, ::Type{Quantity{T,D,TU}}) where {name,S,T,D,SU,TU} =
     promote_type(Quantity{S,D,SU}, Quantity{T,D,TU})
-Base.promote_rule(::Type{Quantity{T,D,TU}}, ::Type{Constant{sym,S,D,SU}}) where {sym,S,T,D,SU,TU} =
+Base.promote_rule(::Type{Quantity{T,D,TU}}, ::Type{Constant{name,S,D,SU}}) where {name,S,T,D,SU,TU} =
     promote_type(Quantity{S,D,SU}, Quantity{T,D,TU})
 
-Base.promote_rule(::Type{Constant{sym,S,NoDims,U}}, ::Type{T}) where {sym,S,U,T<:Number} =
+Base.promote_rule(::Type{Constant{name,S,NoDims,U}}, ::Type{T}) where {name,S,U,T<:Number} =
     promote_type(S, T)
-Base.promote_rule(::Type{Constant{sym,S,NoDims,U}}, ::Type{Quantity{T,NoDims,TU}}) where {sym,S,U,T,TU} =
+Base.promote_rule(::Type{Constant{name,S,NoDims,U}}, ::Type{Quantity{T,NoDims,TU}}) where {name,S,U,T,TU} =
     promote_type(S, T)
 
-Base.convert(::Type{T}, x::Constant{sym,S,NoDims,U}) where {T<:AbstractFloat,sym,S,U} =
+Base.convert(::Type{T}, x::Constant{name,S,NoDims,U}) where {T<:AbstractFloat,name,S,U} =
     float(T, x)
 
-Unitful.uconvert(u::Unitful.Units, c::Constant{sym,T,D,TU}) where {sym,T,D,TU} =
+Unitful.uconvert(u::Unitful.Units, c::Constant{name,T,D,TU}) where {name,T,D,TU} =
     uconvert(u, float(T, c))
