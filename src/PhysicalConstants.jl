@@ -5,16 +5,21 @@ using Measurements, Unitful
 import Measurements: value, uncertainty
 import Unitful: AbstractQuantity
 
+# The type
+
 struct Constant{sym,T,D,U} <: AbstractQuantity{T,D,U} end
+
+# Define helper functions whose method will be implemented in the macros below
 
 function name end
 function ref end
 
-macro constant(sym, name, val, def, unit, unc, bigunc, reference)
+# Functions composing the building blocks of the macros
+
+function _constant_preamble(sym, unit, def)
     esym = esc(sym)
     qsym = esc(Expr(:quote, sym))
     eunit = esc(unit)
-    tag = Measurements.tag_counters[Base.Threads.threadid()] += 1
     _bigconvert = isa(def,Symbol) ? quote
         function _big(::Constant{$qsym,T,D,U}) where {T,D,U}
             c = BigFloat()
@@ -25,6 +30,10 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
     end : quote
         _big(::Constant{$qsym,T,D,U}) where {T,D,U} = $(esc(def))
     end
+    return esym, qsym, eunit, _bigconvert
+end
+
+function _constant_begin(qsym, esym, eunit, val, _bigconvert)
     quote
         const $esym = Constant{$qsym,Float64,dimension($eunit),typeof($eunit)}()
         export $esym
@@ -33,6 +42,49 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
         $_bigconvert
         Base.big(x::Constant{$qsym,T,D,U}) where {T,D,U} = _big(x) * $eunit
         Base.float(::Type{BigFloat}, x::Constant{$qsym,T,D,U}) where {T,D,U} = big(x)
+    end
+end
+
+function _constant_end(qsym, esym, name, reference, eunit)
+    quote
+        Measurements.measurement(::Constant{$qsym,T,D,U}) where {T,D,U} = measurement(Float64, $esym)
+
+        PhysicalConstants.name(::Constant{$qsym,T,D,U}) where {T,D,U}   = $name
+        PhysicalConstants.ref(::Constant{$qsym,T,D,U}) where {T,D,U}    = $reference
+        Unitful.unit(::Constant{$qsym,T,D,U}) where {T,D,U}      = $eunit
+        Unitful.dimension(::Constant{$qsym,T,D,U}) where {T,D,U} = D
+
+        @assert isa(ustrip(float($esym)), Float64)
+        @assert isa(ustrip(big($esym)), BigFloat)
+        @assert isa(ustrip(measurement($esym)), Measurement{Float64})
+        @assert isa(ustrip(measurement(Float32, $esym)), Measurement{Float32})
+        @assert ustrip(float(Float64, $esym)) == Float64(ustrip(big($esym)))
+        @assert ustrip(float(Float32, $esym)) == Float32(ustrip(big($esym)))
+        @assert Float64(value(ustrip(measurement(BigFloat, $esym)))) ==
+            value(ustrip(measurement($esym)))
+        @assert Float64(uncertainty(ustrip(measurement(BigFloat, $esym)))) ==
+            uncertainty(ustrip(measurement($esym)))
+        @assert ustrip(big($esym)) == value(ustrip(measurement(BigFloat, $esym)))
+    end
+end
+
+# Currently AbstractQuantity defines some operations in terms of the inner field `val`.
+
+function Base.getproperty(c::Constant{s,T,D,U}, sym::Symbol) where {s,T,D,U}
+    if sym === :val
+        return ustrip(unit(c), float(T, c))
+    else # fallback to getfield
+        return getfield(c, sym)
+    end
+end
+
+# @constant and @derived_constant macros
+
+macro constant(sym, name, val, def, unit, unc, bigunc, reference)
+    esym, qsym, eunit, _bigconvert = _constant_preamble(sym, unit, def)
+    tag = Measurements.tag_counters[Base.Threads.threadid()] += 1
+    quote
+        $(_constant_begin(qsym, esym, eunit, val, _bigconvert))
 
         function Measurements.measurement(FT::DataType, ::Constant{$qsym,T,D,U}) where {T,D,U}
             vl = FT($val)
@@ -57,74 +109,26 @@ macro constant(sym, name, val, def, unit, unc, bigunc, reference)
                                                                       (vl, unc, $tag)=>one(BigFloat))) * $eunit
             end
         end
-        Measurements.measurement(::Constant{$qsym,T,D,U}) where {T,D,U} = measurement(Float64, $esym)
 
-        PhysicalConstants.name(::Constant{$qsym,T,D,U}) where {T,D,U}   = $name
-        PhysicalConstants.ref(::Constant{$qsym,T,D,U}) where {T,D,U}    = $reference
-        Unitful.unit(::Constant{$qsym,T,D,U}) where {T,D,U}      = $eunit
-        Unitful.dimension(::Constant{$qsym,T,D,U}) where {T,D,U} = D
-
-        @assert isa(ustrip(float($esym)), Float64)
-        @assert isa(ustrip(big($esym)), BigFloat)
-        @assert isa(ustrip(measurement($esym)), Measurement{Float64})
-        @assert isa(ustrip(measurement(Float32, $esym)), Measurement{Float32})
-        @assert ustrip(float(Float64, $esym)) == Float64(ustrip(big($esym)))
-        @assert ustrip(float(Float32, $esym)) == Float32(ustrip(big($esym)))
-        @assert Float64(value(ustrip(measurement(BigFloat, $esym)))) ==
-            value(ustrip(measurement($esym)))
-        @assert Float64(uncertainty(ustrip(measurement(BigFloat, $esym)))) ==
-            uncertainty(ustrip(measurement($esym)))
-        @assert ustrip(big($esym)) == value(ustrip(measurement(BigFloat, $esym)))
+        $(_constant_end(qsym, esym, name, reference, eunit))
     end
 end
 
 macro derived_constant(sym, name, val, def, unit, measure64, measurebig, reference)
-    esym = esc(sym)
-    qsym = esc(Expr(:quote, sym))
-    eunit = esc(unit)
-    _bigconvert = isa(def,Symbol) ? quote
-        function _big(::Constant{$qsym,T,D,U}) where {T,D,U}
-            c = BigFloat()
-            ccall(($(string("mpfr_const_", def)), :libmpfr),
-                  Cint, (Ref{BigFloat}, Int32), c, MPFR.ROUNDING_MODE[])
-            return c
-        end
-    end : quote
-        _big(::Constant{$qsym,T,D,U}) where {T,D,U} = $(esc(def))
-    end
+    esym, qsym, eunit, _bigconvert = _constant_preamble(sym, unit, def)
     quote
-        const $esym = Constant{$qsym,Float64,dimension($eunit),typeof($eunit)}()
-        export $esym
-        Base.float(::Constant{$qsym,T,D,U}) where {T,D,U} = $val * $eunit
-        Base.float(FT::DataType, ::Constant{$qsym,T,D,U}) where {T,D,U} = FT($val) * $eunit
-        $_bigconvert
-        Base.big(x::Constant{$qsym,T,D,U}) where {T,D,U} = _big(x) * $eunit
-        Base.float(::Type{BigFloat}, x::Constant{$qsym,T,D,U}) where {T,D,U} = big(x)
+        $(_constant_begin(qsym, esym, eunit, val, _bigconvert))
 
         Measurements.measurement(::Type{Float64}, ::Constant{$qsym,T,D,U}) where {T,D,U} = $(esc(measure64))
         Measurements.measurement(::Type{BigFloat}, ::Constant{$qsym,T,D,U}) where {T,D,U} = $(esc(measurebig))
         Measurements.measurement(FT::DataType, x::Constant{$qsym,T,D,U}) where {T,D,U} =
             convert(Measurement{FT}, ustrip(measurement(x))) * $eunit
-        Measurements.measurement(::Constant{$qsym,T,D,U}) where {T,D,U} = measurement(Float64, $esym)
 
-        PhysicalConstants.name(::Constant{$qsym,T,D,U}) where {T,D,U}   = $name
-        PhysicalConstants.ref(::Constant{$qsym,T,D,U}) where {T,D,U}    = $reference
-        Unitful.unit(::Constant{$qsym,T,D,U}) where {T,D,U}      = $eunit
-        Unitful.dimension(::Constant{$qsym,T,D,U}) where {T,D,U} = D
-
-        @assert isa(ustrip(float($esym)), Float64)
-        @assert isa(ustrip(big($esym)), BigFloat)
-        @assert isa(ustrip(measurement($esym)), Measurement{Float64})
-        @assert isa(ustrip(measurement(Float32, $esym)), Measurement{Float32})
-        @assert ustrip(float(Float64, $esym)) == Float64(ustrip(big($esym)))
-        @assert ustrip(float(Float32, $esym)) == Float32(ustrip(big($esym)))
-        @assert Float64(value(ustrip(measurement(BigFloat, $esym)))) ==
-            value(ustrip(measurement($esym)))
-        @assert Float64(uncertainty(ustrip(measurement(BigFloat, $esym)))) ==
-            uncertainty(ustrip(measurement($esym)))
-        @assert ustrip(big($esym)) == value(ustrip(measurement(BigFloat, $esym)))
+        $(_constant_end(qsym, esym, name, reference, eunit))
     end
 end
+
+# Show the constants in the REPL
 
 function Base.show(io::IO, x::Constant{sym,T,D,U}) where {T,D,U} where sym
     println(io, "$(name(x)) ($sym)")
@@ -190,14 +194,6 @@ julia> measurement(Float32, h)
 ```
 """
 measurement(::Constant)
-
-function Base.getproperty(c::Constant, sym::Symbol)
-    if sym === :val
-        return ustrip(float(c))
-    else # fallback to getfield
-        return getfield(c, sym)
-    end
-end
 
 include("promotion.jl")
 include("codata2014.jl")
