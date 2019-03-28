@@ -72,7 +72,7 @@ end
 
 function Base.getproperty(c::Constant{s,T,D,U}, sym::Symbol) where {s,T,D,U}
     if sym === :val
-        return ustrip(unit(c), float(T, c))
+        return ustrip(float(T, c))
     else # fallback to getfield
         return getfield(c, sym)
     end
