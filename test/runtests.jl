@@ -19,6 +19,7 @@ end
     @test @inferred(-3.14 + α) ≈ float(α) - 3.14
     @test ε_0 ≈ @inferred(1 / (μ_0 * c ^ 2))
     @test @inferred(big(0) + α) == big(α)
+    @test α * 1.0 == float(α)
 end
 
 @testset "Promotion" begin
