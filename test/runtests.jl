@@ -13,6 +13,11 @@ import PhysicalConstants.CODATA2014: α, atm, c_0, e, ε_0, h, ħ, µ_0
     @test isone(measurement(BigFloat, ħ) / (measurement(BigFloat, h) / 2big(pi)))
 end
 
+@testset "Utils" begin
+    @test c_0.val === ustrip(float(c_0))
+    @test_throws ErrorException h.foo
+end
+
 @testset "Promotion" begin
     x = @inferred(inv(μ_0 * c_0 ^ 2))
     T = promote_type(typeof(ε_0), typeof(x))
