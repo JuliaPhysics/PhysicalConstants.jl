@@ -24,7 +24,7 @@ manager](https://julialang.github.io/Pkg.jl/stable/).  After entering the
 package manager mode by pressing `]`, run the command
 
 ```julia
-pkg> add https://github.com/JuliaPhysics/PhysicalConstants.jl
+pkg> add PhysicalConstants
 ```
 
 Usage
