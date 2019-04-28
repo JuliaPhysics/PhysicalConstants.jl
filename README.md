@@ -163,7 +163,7 @@ end
 | `SpeedOfLightInVacuum`                  | `c_0` | 2.99792458e8           | `m s^-1`         |
 | `StandardAccelerationOfGravitation`     | `g_n` | 9.80665                | `m s^-2`         |
 | `StandardAtmosphere`                    | `atm` | 101325.0               | `Pa`             |
-| `StefanBoltzmannConstant`               | `σ`   | 5.670367e-8            | `m^2`            |
+| `StefanBoltzmannConstant`               | `σ`   | 5.670367e-8            | `W m^-2 K^-4`    |
 | `ThomsonCrossSection`                   | `σ_e` | 6.6524587158e-29       | `m^2`            |
 | `WienWavelengthDisplacementLawConstant` | `b`   | 0.0028977729           | `K m`            |
 
