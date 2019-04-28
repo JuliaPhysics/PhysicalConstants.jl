@@ -2,7 +2,7 @@ module CODATA2014
 
 using PhysicalConstants, Measurements, Unitful
 
-import Unitful: Ω, A, C, F, J, kg, K, m, mol, N, Pa, s, T
+import Unitful: Ω, A, C, F, J, kg, K, m, mol, N, Pa, s, T, W
 import PhysicalConstants: @constant, @derived_constant
 
 @constant(FineStructureConstant, α, "Fine-structure constant", 7.297_352_5664e-3,
@@ -75,7 +75,7 @@ import PhysicalConstants: @constant, @derived_constant
           BigFloat(10_973_731_568_508)/BigFloat(1_000_000), m^-1,
           6.5e-5, BigFloat(65)/BigFloat(1_000_000), "CODATA 2014")
 @constant(StefanBoltzmannConstant, σ, "Stefan-Boltzmann constant", 5.670_367e-8,
-          BigFloat(5670_367)/BigFloat(100_000_000_000_000), m^2,
+          BigFloat(5670_367)/BigFloat(100_000_000_000_000), W * m^-2 * K^-4,
           1.3e-13, BigFloat(13)/BigFloat(100_000_000_000_000), "CODATA 2014")
 @constant(ThomsonCrossSection, σ_e, "Thomson cross section", 0.665_245_871_58e-28,
           BigFloat(66_524_587_158)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000_000),
