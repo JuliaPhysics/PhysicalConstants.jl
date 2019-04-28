@@ -1,5 +1,10 @@
 # PhysicalConstants.jl
 
+| **Build Status**                          | **Code Coverage**               |
+|:-----------------------------------------:|:-------------------------------:|
+| [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
+| [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
+
 Introduction
 ------------
 
@@ -172,3 +177,16 @@ License
 
 The `PhysicalConstants.jl` package is licensed under the MIT "Expat" License.
 The original author is [Mosè Giordano](https://github.com/giordano/).
+
+
+[travis-img]: https://travis-ci.org/JuliaPhysics/PhysicalConstants.jl.svg?branch=master
+[travis-url]: https://travis-ci.org/JuliaPhysics/PhysicalConstants.jl
+
+[appvey-img]: https://ci.appveyor.com/api/projects/status/ct2nx2t38hok2vy0?svg=true
+[appvey-url]: https://ci.appveyor.com/project/giordano/constants-jl
+
+[coveral-img]: https://coveralls.io/repos/github/JuliaPhysics/PhysicalConstants.jl/badge.svg?branch=master
+[coveral-url]: https://coveralls.io/github/JuliaPhysics/PhysicalConstants.jl?branch=master
+
+[codecov-img]: https://codecov.io/gh/JuliaPhysics/PhysicalConstants.jl/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/JuliaPhysics/PhysicalConstants.jl
