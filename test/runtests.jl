@@ -1,7 +1,7 @@
-using PhysicalConstants.CODATA2014, Measurements, Unitful
+using PhysicalConstants, Measurements, Unitful
 using Test
 
-import PhysicalConstants.CODATA2014: α, atm, c_0, e, ε_0, h, ħ, k_B, µ_0, σ
+import PhysicalConstants.CODATA2014: α, atm, c_0, e, ε_0, h, ħ, µ_0
 
 @testset "Base" begin
     @test ustrip(big(h)) == big"6.626070040e-34"
@@ -31,16 +31,18 @@ end
 end
 
 @testset "Maths" begin
-    @test α ≈ @inferred(e^2/(4 * pi * ε_0 * ħ * c_0))
-    @test @inferred(α + 2) ≈ 2 + float(α)
-    @test @inferred(5 + α) ≈ float(α) + 5
-    @test @inferred(α + 2.718) ≈ 2.718 + float(α)
-    @test @inferred(-3.14 + α) ≈ float(α) - 3.14
-    @test ε_0 ≈ @inferred(1 / (μ_0 * c_0 ^ 2))
-    @test @inferred(big(0) + α) == big(α)
-    @test @inferred(α * 1.0) == float(α)
-    @test (pi ^ 2 * k_B ^ 4) / (60 * ħ ^ 3 * c_0 ^ 2) ≈
-        σ atol = measurement(σ).val.err * unit(σ)
+    @testset for cst in (PhysicalConstants.CODATA2014,)
+        @test cst.α ≈ @inferred(cst.e^2/(4 * cst.pi * cst.ε_0 * cst.ħ * cst.c_0))
+        @test @inferred(cst.α + 2) ≈ 2 + float(cst.α)
+        @test @inferred(5 + cst.α) ≈ float(cst.α) + 5
+        @test @inferred(cst.α + 2.718) ≈ 2.718 + float(cst.α)
+        @test @inferred(-3.14 + cst.α) ≈ float(cst.α) - 3.14
+        @test cst.ε_0 ≈ @inferred(1 / (cst.μ_0 * cst.c_0 ^ 2))
+        @test @inferred(big(0) + cst.α) == big(cst.α)
+        @test @inferred(cst.α * 1.0) == float(cst.α)
+        @test (pi ^ 2 * cst.k_B ^ 4) / (60 * cst.ħ ^ 3 * cst.c_0 ^ 2) ≈
+            cst.σ atol = measurement(cst.σ).val.err * unit(cst.σ)
+    end
 end
 
 @testset "Show" begin
