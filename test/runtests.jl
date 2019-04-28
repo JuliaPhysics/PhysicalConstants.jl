@@ -1,7 +1,7 @@
 using PhysicalConstants.CODATA2014, Measurements, Unitful
 using Test
 
-import PhysicalConstants.CODATA2014: α, atm, c_0, e, ε_0, h, ħ, µ_0
+import PhysicalConstants.CODATA2014: α, atm, c_0, e, ε_0, h, ħ, k_B, µ_0, σ
 
 @testset "Base" begin
     @test ustrip(big(h)) == big"6.626070040e-34"
@@ -39,6 +39,8 @@ end
     @test ε_0 ≈ @inferred(1 / (μ_0 * c_0 ^ 2))
     @test @inferred(big(0) + α) == big(α)
     @test @inferred(α * 1.0) == float(α)
+    @test (pi ^ 2 * k_B ^ 4) / (60 * ħ ^ 3 * c_0 ^ 2) ≈
+        σ atol = measurement(σ).val.err * unit(σ)
 end
 
 @testset "Show" begin
