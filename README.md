@@ -153,7 +153,7 @@ end
 | `BohrRadius`                            | `a_0` | 5.2917721067e-11       | `m`              |
 | `BoltzmannConstant`                     | `k_B` | 1.38064852e-23         | `J K^-1`         |
 | `CharacteristicImpedanceOfVacuum`       | `Z_0` | 376.73031346177066     | `Ω`              |
-| `ElectrictConstant`                     | `ε_0` | 8.854187817620389e-12  | `F m^-1`         |
+| `ElectricConstant`                      | `ε_0` | 8.854187817620389e-12  | `F m^-1`         |
 | `ElectronMass`                          | `m_e` | 9.10938356e-31         | `kg`             |
 | `ElementaryCharge`                      | `e`   | 1.6021766208e-19       | `C`              |
 | `FineStructureConstant`                 | `α`   | 0.0072973525664        |                  |
