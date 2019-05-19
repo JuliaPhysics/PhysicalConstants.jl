@@ -21,7 +21,7 @@ import PhysicalConstants: @constant, @derived_constant
 @constant(MagneticConstant, µ_0, "Magnetic constant", 1.2566370614359173e-6,
           4*big(pi)/BigFloat(10_000_000), N * A^-2, 0.0, BigFloat(0.0),
           "CODATA 2014")
-@constant(ElectrictConstant, ε_0, "Electric constant", 8.854187817620389e-12,
+@constant(ElectricConstant, ε_0, "Electric constant", 8.854187817620389e-12,
           inv(ustrip(big(µ_0)) * ustrip(big(c_0))^2), F * m^-1,
           0.0, BigFloat(0.0), "CODATA 2014")
 @constant(ElementaryCharge, e, "Elementary charge", 1.602_176_6208e-19,
