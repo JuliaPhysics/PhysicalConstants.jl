@@ -31,7 +31,8 @@ end
 end
 
 @testset "Maths" begin
-    @testset for cst in (PhysicalConstants.CODATA2014,)
+    @testset "$cst" for cst in (PhysicalConstants.CODATA2014,
+                                PhysicalConstants.CODATA2018)
         @test cst.α ≈ @inferred(cst.e^2/(4 * cst.pi * cst.ε_0 * cst.ħ * cst.c_0))
         @test @inferred(cst.α + 2) ≈ 2 + float(cst.α)
         @test @inferred(5 + cst.α) ≈ float(cst.α) + 5
