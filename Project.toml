@@ -1,14 +1,16 @@
 name = "PhysicalConstants"
 uuid = "5ad8b20f-a522-5ce9-bfc9-ddf1d5bda6ab"
 authors = ["Mosè Giordano <mose@gnu.org>"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
+Roots = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
 Measurements = "≥ 2.0.0"
+Roots = "≥ 0.8.0"
 Unitful = "≥ 0.15.0"
 julia = "≥ 1.0.0"
 

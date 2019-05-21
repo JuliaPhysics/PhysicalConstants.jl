@@ -16,9 +16,9 @@ also be turned into `Measurement` objects (from
 request.
 
 Constants are grouped into different submodules, so that the user can choose
-different datasets as needed.  Currently, only 2014 edition of
+different datasets as needed.  Currently, 2014 and 2018 editions of
 [CODATA](https://physics.nist.gov/cuu/Constants/) recommended values of the
-fundamental physical constants is provided.
+fundamental physical constants are provided.
 
 Installation
 ------------
@@ -38,41 +38,41 @@ Usage
 You can load the package as usual with `using PhysicalConstants` but this module
 does not provide anything useful for the end-users.  You most probably want to
 directly load the submodule with the dataset you are interested in.  For
-example, for CODATA 2014 load `PhysicalConstants.CODATA2014`:
+example, for CODATA 2018 load `PhysicalConstants.CODATA2018`:
 
 ```julia
-julia> using PhysicalConstants.CODATA2014
+julia> using PhysicalConstants.CODATA2018
 
 julia> SpeedOfLightInVacuum
 Speed of light in vacuum (c_0)
 Value                         = 2.99792458e8 m s^-1
 Standard uncertainty          = (exact)
 Relative standard uncertainty = (exact)
-Reference                     = CODATA 2014
+Reference                     = CODATA 2018
 
 julia> NewtonianConstantOfGravitation
 Newtonian constant of gravitation (G)
-Value                         = 6.67408e-11 m^3 kg^-1 s^-2
-Standard uncertainty          = 3.1e-15 m^3 kg^-1 s^-2
-Relative standard uncertainty = 4.6e-5
-Reference                     = CODATA 2014
+Value                         = 6.6743e-11 m^3 kg^-1 s^-2
+Standard uncertainty          = 1.5e-15 m^3 kg^-1 s^-2
+Relative standard uncertainty = 2.2e-5
+Reference                     = CODATA 2018
 ```
 
 `SpeedOfLightInVacuum` and `NewtonianConstantOfGravitation` are two of the
-`Constant`s defined in the `PhysicalConstants.CODATA2014` module, the full list
+`Constant`s defined in the `PhysicalConstants.CODATA2018` module, the full list
 of available constants is given below.
 
 `Constant`s can be readily used in mathematical operations, using by default
 their `Float64` value:
 
 ```julia
-julia> import PhysicalConstants.CODATA2014: c_0, ε_0, μ_0
+julia> import PhysicalConstants.CODATA2018: c_0, ε_0, μ_0
 
 julia> 2 * ε_0
-1.7708375635240778e-11 F m^-1
+1.77083756256e-11 F m^-1
 
 julia> ε_0 - 1 / (μ_0 * c_0 ^ 2)
-0.0 A^2 s^4 kg^-1 m^-3
+-3.8450973786644646e-25 A^2 s^4 kg^-1 m^-3
 ```
 
 If you want to use a different precision for the value of the constant, use the
@@ -83,13 +83,13 @@ julia> float(Float32, ε_0)
 8.854188f-12 F m^-1
 
 julia> float(BigFloat, ε_0)
-8.854187817620389850536563031710750260608370166599449808102417152405395095459979e-12 F m^-1
+8.854187812799999999999999999999999999999999999999999999999999999999999999999973e-12 F m^-1
 
 julia> big(ε_0)
-8.854187817620389850536563031710750260608370166599449808102417152405395095459979e-12 F m^-1
+8.854187812799999999999999999999999999999999999999999999999999999999999999999973e-12 F m^-1
 
 julia> big(ε_0) - inv(big(μ_0) * big(c_0)^2)
-0.0 A^2 s^4 kg^-1 m^-3
+-3.849883307464075736533920296598236938395867709081184624499315166190408485179288e-25 A^2 s^4 kg^-1 m^-3
 ```
 
 Note that `big(constant)` is an alias for `float(BigFloat, constant)`.
@@ -100,16 +100,16 @@ the constant, use `measurement(x)`:
 ```julia
 julia> using Measurements
 
-julia> import PhysicalConstants.CODATA2014: ħ
+julia> import PhysicalConstants.CODATA2018: h, ħ
 
 julia> measurement(ħ)
-1.0545718001391127e-34 ± 1.2891550390443523e-42 J s
+1.0545718176461565e-34 ± 0.0 J s
 
 julia> measurement(Float32, ħ)
-1.0545718e-34 ± 1.289e-42 J s
+1.0545718e-34 ± 0.0 J s
 
 julia> measurement(BigFloat, ħ)
-1.054571800139112651153941068725066773746246506229852090971714108355028066256094e-34 ± 1.289155039044352219727958483317366332479123130497697234856105486877064060837251e-42 J s
+1.054571817646156391262428003302280744722826330020413122421923470598435912734741e-34 ± 0.0 J s
 
 julia> measurement(BigFloat, ħ) / (measurement(BigFloat, h) / (2 * big(pi)))
 1.0 ± 0.0
@@ -126,18 +126,17 @@ frequently, as shown in the examples above.
 
 <!--
 using PhysicalConstants.CODATA2014, Unitful
-import PhysicalConstants: Constant, name
 
 const constants = names(CODATA2014)
 const others = setdiff(names(CODATA2014, all = true), constants)
 
-symbol(::Constant{sym}) where sym = sym
 println("| Long name | Short | Value | Unit |")
 println("| --------- | ----- | ----- | ---- |")
-for c in getfield.(Ref(CODATA2014), constants)
-    if c isa Constant
-        sym = others[findall(x -> c == getfield(CODATA2014, x), others)][1]
-        println("| `", symbol(c), "` | `", sym, "` | ", ustrip(float(c)), " | ",
+for constant in constants
+    c = getfield(CODATA2014, constant)
+    if c isa PhysicalConstants.PhysicalConstant
+        sym = others[findall(x -> c === getfield(CODATA2014, x), others)][1]
+        println("| `", constant, "` | `", sym, "` | ", ustrip(float(c)), " | ",
                 unit(c) == Unitful.NoUnits ? "" : "`$(unit(c))`", " |")
     end
 end
@@ -168,9 +167,38 @@ end
 | `SpeedOfLightInVacuum`                  | `c_0` | 2.99792458e8           | `m s^-1`         |
 | `StandardAccelerationOfGravitation`     | `g_n` | 9.80665                | `m s^-2`         |
 | `StandardAtmosphere`                    | `atm` | 101325.0               | `Pa`             |
-| `StefanBoltzmannConstant`               | `σ`   | 5.670367e-8            | `W m^-2 K^-4`    |
+| `StefanBoltzmannConstant`               | `σ`   | 5.670367e-8            | `W K^-4 m^-2`    |
 | `ThomsonCrossSection`                   | `σ_e` | 6.6524587158e-29       | `m^2`            |
 | `WienWavelengthDisplacementLawConstant` | `b`   | 0.0028977729           | `K m`            |
+
+### `CODATA2018`
+
+| Long name                               | Short | Value                  | Unit             |
+| ---------                               | ----- | -----                  | ----             |
+| `AtomicMassConstant`                    | `m_u` | 1.6605390666e-27       | `kg`             |
+| `AvogadroConstant`                      | `N_A` | 6.02214076e23          | `mol^-1`         |
+| `BohrMagneton`                          | `μ_B` | 9.2740100783e-24       | `J T^-1`         |
+| `BohrRadius`                            | `a_0` | 5.29177210903e-11      | `m`              |
+| `BoltzmannConstant`                     | `k_B` | 1.380649e-23           | `J K^-1`         |
+| `ElectronMass`                          | `m_e` | 9.1093837015e-31       | `kg`             |
+| `ElementaryCharge`                      | `e`   | 1.602176634e-19        | `C`              |
+| `FineStructureConstant`                 | `α`   | 0.0072973525693        |                  |
+| `MolarGasConstant`                      | `R`   | 8.31446261815324       | `J K^-1 mol^-1`  |
+| `NeutronMass`                           | `m_n` | 1.67492749804e-27      | `kg`             |
+| `NewtonianConstantOfGravitation`        | `G`   | 6.6743e-11             | `m^3 kg^-1 s^-2` |
+| `PlanckConstant`                        | `h`   | 6.62607015e-34         | `J s`            |
+| `ProtonMass`                            | `m_p` | 1.67262192369e-27      | `kg`             |
+| `ReducedPlanckConstant`                 | `ħ`   | 1.0545718176461565e-34 | `J s`            |
+| `RydbergConstant`                       | `R_∞` | 1.097373156816e7       | `m^-1`           |
+| `SpeedOfLightInVacuum`                  | `c_0` | 2.99792458e8           | `m s^-1`         |
+| `StandardAccelerationOfGravitation`     | `g_n` | 9.80665                | `m s^-2`         |
+| `StandardAtmosphere`                    | `atm` | 101325.0               | `Pa`             |
+| `StefanBoltzmannConstant`               | `σ`   | 5.6703744191844294e-8  | `W K^-4 m^-2`    |
+| `ThomsonCrossSection`                   | `σ_e` | 6.6524587321e-29       | `m^2`            |
+| `VacuumElectricPermittivity`            | `ε_0` | 8.8541878128e-12       | `F m^-1`         |
+| `VacuumMagneticPermeability`            | `μ_0` | 1.25663706212e-6       | `N A^-2`         |
+| `WienFrequencyDisplacementLawConstant`  | `b′`  | 5.878925757646825e10   | `Hz K^-1`        |
+| `WienWavelengthDisplacementLawConstant` | `b`   | 0.0028977719551851727  | `K m`            |
 
 License
 -------
