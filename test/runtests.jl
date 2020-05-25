@@ -47,12 +47,11 @@ end
 end
 
 @testset "Show" begin
-    @test repr(c_0) ==
-        "Speed of light in vacuum (c_0)
-Value                         = 2.99792458e8 m s^-1
-Standard uncertainty          = (exact)
-Relative standard uncertainty = (exact)
-Reference                     = CODATA 2014"
+    @test occursin(r"Speed of light in vacuum \(c_0\)
+Value                         = 2.99792458e8 m .*
+Standard uncertainty          = \(exact\)
+Relative standard uncertainty = \(exact\)
+Reference                     = CODATA 2014", repr(c_0))
     @test repr(α) ==
         "Fine-structure constant (α)
 Value                         = 0.0072973525664

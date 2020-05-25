@@ -1,9 +1,9 @@
 # PhysicalConstants.jl
 
-| **Build Status**                          | **Code Coverage**               |
-|:-----------------------------------------:|:-------------------------------:|
-| [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
-| [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
+| **Documentation**                       | **Build Status**                          | **Code Coverage**               |
+|:---------------------------------------:|:-----------------------------------------:|:-------------------------------:|
+| [![][docs-stable-img]][docs-stable-url] | [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
+| [![][docs-latest-img]][docs-latest-url] | [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
 
 Introduction
 ------------
@@ -59,11 +59,11 @@ Reference                     = CODATA 2018
 ```
 
 `SpeedOfLightInVacuum` and `NewtonianConstantOfGravitation` are two of the
-`Constant`s defined in the `PhysicalConstants.CODATA2018` module, the full list
-of available constants is given below.
+`PhysicalConstant`s defined in the `PhysicalConstants.CODATA2018` module, the
+full list of available constants is given below.
 
-`Constant`s can be readily used in mathematical operations, using by default
-their `Float64` value:
+`PhysicalConstant`s can be readily used in mathematical operations, using by
+default their `Float64` value:
 
 ```julia
 julia> import PhysicalConstants.CODATA2018: c_0, ε_0, μ_0
@@ -115,97 +115,18 @@ julia> measurement(BigFloat, ħ) / (measurement(BigFloat, h) / (2 * big(pi)))
 1.0 ± 0.0
 ```
 
-List of Set of Constants
-------------------------
-
-*Note*: each dataset listed below exports by default only the full long names of
-the constants.  Short aliases are provided for convenience, but they are not
-exported, to avoid polluting the main namespace with dozens of short-named
-variables.  Users can to import the short names of the variables they use most
-frequently, as shown in the examples above.
-
-<!--
-using PhysicalConstants.CODATA2014, Unitful
-
-const constants = names(CODATA2014)
-const others = setdiff(names(CODATA2014, all = true), constants)
-
-println("| Long name | Short | Value | Unit |")
-println("| --------- | ----- | ----- | ---- |")
-for constant in constants
-    c = getfield(CODATA2014, constant)
-    if c isa PhysicalConstants.PhysicalConstant
-        sym = others[findall(x -> c === getfield(CODATA2014, x), others)][1]
-        println("| `", constant, "` | `", sym, "` | ", ustrip(float(c)), " | ",
-                unit(c) == Unitful.NoUnits ? "" : "`$(unit(c))`", " |")
-    end
-end
--->
-
-### `CODATA2014`
-
-| Long name                               | Short | Value                  | Unit             |
-| ---------                               | ----- | -----                  | ----             |
-| `AtomicMassConstant`                    | `m_u` | 1.66053904e-27         | `kg`             |
-| `AvogadroConstant`                      | `N_A` | 6.022140857e23         | `mol^-1`         |
-| `BohrMagneton`                          | `μ_B` | 9.274009994e-24        | `J T^-1`         |
-| `BohrRadius`                            | `a_0` | 5.2917721067e-11       | `m`              |
-| `BoltzmannConstant`                     | `k_B` | 1.38064852e-23         | `J K^-1`         |
-| `CharacteristicImpedanceOfVacuum`       | `Z_0` | 376.73031346177066     | `Ω`              |
-| `ElectricConstant`                      | `ε_0` | 8.854187817620389e-12  | `F m^-1`         |
-| `ElectronMass`                          | `m_e` | 9.10938356e-31         | `kg`             |
-| `ElementaryCharge`                      | `e`   | 1.6021766208e-19       | `C`              |
-| `FineStructureConstant`                 | `α`   | 0.0072973525664        |                  |
-| `MagneticConstant`                      | `μ_0` | 1.2566370614359173e-6  | `N A^-2`         |
-| `MolarGasConstant`                      | `R`   | 8.3144598              | `J K^-1 mol^-1`  |
-| `NeutronMass`                           | `m_n` | 1.674927471e-27        | `kg`             |
-| `NewtonianConstantOfGravitation`        | `G`   | 6.67408e-11            | `m^3 kg^-1 s^-2` |
-| `PlanckConstant`                        | `h`   | 6.62607004e-34         | `J s`            |
-| `PlanckConstantOver2pi`                 | `ħ`   | 1.0545718001391127e-34 | `J s`            |
-| `ProtonMass`                            | `m_p` | 1.672621898e-27        | `kg`             |
-| `RydbergConstant`                       | `R_∞` | 1.0973731568508e7      | `m^-1`           |
-| `SpeedOfLightInVacuum`                  | `c_0` | 2.99792458e8           | `m s^-1`         |
-| `StandardAccelerationOfGravitation`     | `g_n` | 9.80665                | `m s^-2`         |
-| `StandardAtmosphere`                    | `atm` | 101325.0               | `Pa`             |
-| `StefanBoltzmannConstant`               | `σ`   | 5.670367e-8            | `W K^-4 m^-2`    |
-| `ThomsonCrossSection`                   | `σ_e` | 6.6524587158e-29       | `m^2`            |
-| `WienWavelengthDisplacementLawConstant` | `b`   | 0.0028977729           | `K m`            |
-
-### `CODATA2018`
-
-| Long name                               | Short | Value                  | Unit             |
-| ---------                               | ----- | -----                  | ----             |
-| `AtomicMassConstant`                    | `m_u` | 1.6605390666e-27       | `kg`             |
-| `AvogadroConstant`                      | `N_A` | 6.02214076e23          | `mol^-1`         |
-| `BohrMagneton`                          | `μ_B` | 9.2740100783e-24       | `J T^-1`         |
-| `BohrRadius`                            | `a_0` | 5.29177210903e-11      | `m`              |
-| `BoltzmannConstant`                     | `k_B` | 1.380649e-23           | `J K^-1`         |
-| `ElectronMass`                          | `m_e` | 9.1093837015e-31       | `kg`             |
-| `ElementaryCharge`                      | `e`   | 1.602176634e-19        | `C`              |
-| `FineStructureConstant`                 | `α`   | 0.0072973525693        |                  |
-| `MolarGasConstant`                      | `R`   | 8.31446261815324       | `J K^-1 mol^-1`  |
-| `NeutronMass`                           | `m_n` | 1.67492749804e-27      | `kg`             |
-| `NewtonianConstantOfGravitation`        | `G`   | 6.6743e-11             | `m^3 kg^-1 s^-2` |
-| `PlanckConstant`                        | `h`   | 6.62607015e-34         | `J s`            |
-| `ProtonMass`                            | `m_p` | 1.67262192369e-27      | `kg`             |
-| `ReducedPlanckConstant`                 | `ħ`   | 1.0545718176461565e-34 | `J s`            |
-| `RydbergConstant`                       | `R_∞` | 1.097373156816e7       | `m^-1`           |
-| `SpeedOfLightInVacuum`                  | `c_0` | 2.99792458e8           | `m s^-1`         |
-| `StandardAccelerationOfGravitation`     | `g_n` | 9.80665                | `m s^-2`         |
-| `StandardAtmosphere`                    | `atm` | 101325.0               | `Pa`             |
-| `StefanBoltzmannConstant`               | `σ`   | 5.6703744191844294e-8  | `W K^-4 m^-2`    |
-| `ThomsonCrossSection`                   | `σ_e` | 6.6524587321e-29       | `m^2`            |
-| `VacuumElectricPermittivity`            | `ε_0` | 8.8541878128e-12       | `F m^-1`         |
-| `VacuumMagneticPermeability`            | `μ_0` | 1.25663706212e-6       | `N A^-2`         |
-| `WienFrequencyDisplacementLawConstant`  | `b′`  | 5.878925757646825e10   | `Hz K^-1`        |
-| `WienWavelengthDisplacementLawConstant` | `b`   | 0.0028977719551851727  | `K m`            |
-
 License
 -------
 
 The `PhysicalConstants.jl` package is licensed under the MIT "Expat" License.
 The original author is [Mosè Giordano](https://github.com/giordano/).
 
+
+[docs-latest-img]: https://img.shields.io/badge/docs-latest-blue.svg
+[docs-latest-url]: https://juliaphysics.github.io/PhysicalConstants.jl/dev/
+
+[docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-stable-url]: https://juliaphysics.github.io/PhysicalConstants.jl/stable/
 
 [travis-img]: https://travis-ci.org/JuliaPhysics/PhysicalConstants.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/JuliaPhysics/PhysicalConstants.jl

@@ -7,6 +7,22 @@ import Unitful: AbstractQuantity
 
 # The type
 
+"""
+    PhysicalConstant{name,T,D,U} <: AbstractQuantity{T,D,U}
+
+A type representing a physical constant, with units and -- optionally -- with
+error as standard deviation.
+
+Each type is a singleton and is parametrised by
+
+* `name`: a `Symbol` representing its name
+* `T`: the numerical type of the constant, e.g. `Float64`
+* `D`: the physical dimension, from [`Unitful.jl`](https://painterqubits.github.io/Unitful.jl/stable/)
+* `U`: the physical unit, from [`Unitful.jl`](https://painterqubits.github.io/Unitful.jl/stable/)
+
+See [`@constant`](@ref) and [`@derived_constant`](@ref) for how to define a new
+physical constant.
+"""
 struct PhysicalConstant{name,T,D,U} <: AbstractQuantity{T,D,U} end
 
 _name(::PhysicalConstant{name,T,D,U}) where {name,T,D,U} = name
@@ -92,6 +108,38 @@ end
 
 # @constant and @derived_constant macros
 
+"""
+    @constant(name, sym, descr, val, def, unit, unc, bigunc, reference) -> PhysicalConstant
+
+Macro to define a new [`PhysicalConstant`](@ref).
+
+The arguments are:
+
+* `name`: the full name of the constant, this will be the eported name of the constant
+* `sym`: a non-exported alias for the constant
+* `descr`: a description of the constant
+* `val`: the numerical `Float64` value of the constant, in the reference units
+* `def`:  the expression to use to compute the constant in any precision, in the reference units
+* `unit`: the reference units
+* `unc`: the numerical `Float64` value of the uncertainty, in the reference units
+* `bigunc`: the expression to use to compute the uncertainty in any precision, in the reference units
+* `reference`: the name of the reference
+
+```jldoctest
+julia> using PhysicalConstants, Unitful
+
+julia> PhysicalConstants.@constant(MyConstant, mc, "A custom constant",
+           12.34, BigFloat(1234) / BigFloat(100), u"m/s",
+           0.56, BigFloat(56) / BigFloat(100), "My lab notebook")
+
+julia> MyConstant
+A custom constant (mc)
+Value                         = 12.34 m s^-1
+Standard uncertainty          = 0.56 m s^-1
+Relative standard uncertainty = 0.045
+Reference                     = My lab notebook
+```
+"""
 macro constant(name, sym, descr, val, def, unit, unc, bigunc, reference)
     ename, qname, esym, qsym, eunit, _bigconvert = _constant_preamble(name, sym, unit, def)
     tag = Measurements.tag_counters[Base.Threads.threadid()] += 1
@@ -128,6 +176,50 @@ macro constant(name, sym, descr, val, def, unit, unc, bigunc, reference)
     end
 end
 
+"""
+    @derived_constant(name, sym, descr, val, def, unit, unc, bigunc, reference) -> PhysicalConstant
+
+Macro to define a new [`PhysicalConstant`](@ref) derived from another existing `PhysicalConstant`.
+
+The arguments are:
+
+* `name`: the full name of the constant, this will be the eported name of the constant
+* `sym`: a non-exported alias for the constant
+* `descr`: a description of the constant
+* `val`: the numerical `Float64` value of the constant, in the reference units
+* `def`:  the expression to use to compute the constant in any precision, in the reference units
+* `unit`: the reference units
+* `measure64`: the numerical `Measurement{Float64}` value of the constant, in the reference units
+* `measurebig`: the expression to use to compute the comstamt as a `Measurement{BigFloat}`, in the reference units
+* `reference`: the name of the reference
+
+```jldoctest
+julia> using PhysicalConstants, Unitful, Measurements
+
+julia> PhysicalConstants.@constant(MyConstant, mc, "A custom constant",
+           12.34, BigFloat(1234) / BigFloat(100), u"m/s",
+           0.56, BigFloat(56) / BigFloat(100), "My lab notebook")
+
+julia> MyConstant
+A custom constant (mc)
+Value                         = 12.34 m s^-1
+Standard uncertainty          = 0.56 m s^-1
+Relative standard uncertainty = 0.045
+Reference                     = My lab notebook
+
+julia> PhysicalConstants.@derived_constant(MyDerivedConstant, mdc, "A custom derived constant",
+           96.252, ustrip(big(mc)) * BigFloat(78) / BigFloat(10), u"m/s",
+           measurement(mc) * 7.8, measurement(BigFloat, mc)  * BigFloat(78) / BigFloat(10),
+           "My lab notebook")
+
+julia> MyDerivedConstant
+A custom derived constant (mdc)
+Value                         = 96.252 m s^-1
+Standard uncertainty          = 4.368 m s^-1
+Relative standard uncertainty = 0.045
+Reference                     = My lab notebook
+```
+"""
 macro derived_constant(name, sym, descr, val, def, unit, measure64, measurebig, reference)
     ename, qname, esym, qsym, eunit, _bigconvert = _constant_preamble(name, sym, unit, def)
     quote
@@ -155,14 +247,14 @@ Return the physical constant as a `Quantity` with the floating type optionally s
 `FloatType`, `Float64` by default.
 
 ```jldoctest
-julia> using PhysicalConstants.CODATA2014: G
+julia> using PhysicalConstants.CODATA2018: G
 
 julia> G
 Newtonian constant of gravitation (G)
 Value                         = 6.67408e-11 m^3 kg^-1 s^-2
 Standard uncertainty          = 3.1e-15 m^3 kg^-1 s^-2
 Relative standard uncertainty = 4.6e-5
-Reference                     = CODATA 2014
+Reference                     = CODATA 2018
 
 julia> float(G)
 6.67408e-11 m^3 kg^-1 s^-2
@@ -181,22 +273,22 @@ Return the physical constant as a `Quantity` with standard uncertainty.  The flo
 precision can be optionally specified with the `FloatType`, `Float64` by default.
 
 ```jldoctest
-julia> using PhysicalConstants.CODATA2014, Measurements
+julia> using PhysicalConstants.CODATA2018, Measurements
 
-julia> import PhysicalConstants.CODATA2014: h
+julia> import PhysicalConstants.CODATA2018: h
 
 julia> h
 Planck constant (h)
-Value                         = 6.62607004e-34 J s
-Standard uncertainty          = 8.1e-42 J s
-Relative standard uncertainty = 1.2e-8
-Reference                     = CODATA 2014
+Value                         = 6.62607015e-34 J s
+Standard uncertainty          = (exact)
+Relative standard uncertainty = (exact)
+Reference                     = CODATA 2018
 
 julia> measurement(h)
-6.62607004e-34 ± 8.1e-42 J s
+6.62607015e-34 ± 0.0 J s
 
 julia> measurement(Float32, h)
-6.62607e-34 ± 8.1e-42 J s
+6.62607e-34 ± 0.0 J s
 ```
 """
 measurement(::PhysicalConstant)
