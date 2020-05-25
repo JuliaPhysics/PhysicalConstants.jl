@@ -115,6 +115,10 @@ julia> measurement(BigFloat, ħ) / (measurement(BigFloat, h) / (2 * big(pi)))
 1.0 ± 0.0
 ```
 
+For more information read the
+[documentation](https://juliaphysics.github.io/PhysicalConstants.jl/stable/),
+which includes the full list of constants defined by the package.
+
 License
 -------
 

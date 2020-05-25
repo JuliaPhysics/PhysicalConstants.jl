@@ -1,6 +1,12 @@
 History of PhysicalConstants.jl
 ===============================
 
+v0.2.1 (2020-05-25)
+-------------------
+
+* Documentation available at
+  https://juliaphysics.github.io/PhysicalConstants.jl/stable/
+
 v0.2.0 (2019-05-21)
 -------------------
 

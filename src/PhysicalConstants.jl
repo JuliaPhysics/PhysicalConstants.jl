@@ -275,20 +275,20 @@ precision can be optionally specified with the `FloatType`, `Float64` by default
 ```jldoctest
 julia> using PhysicalConstants.CODATA2018, Measurements
 
-julia> import PhysicalConstants.CODATA2018: h
+julia> import PhysicalConstants.CODATA2018: μ_0
 
-julia> h
-Planck constant (h)
-Value                         = 6.62607015e-34 J s
-Standard uncertainty          = (exact)
-Relative standard uncertainty = (exact)
+julia> μ_0
+Vacuum magnetic permeability (μ_0)
+Value                         = 1.25663706212e-6 N A^-2
+Standard uncertainty          = 1.9e-16 N A^-2
+Relative standard uncertainty = 1.5e-10
 Reference                     = CODATA 2018
 
-julia> measurement(h)
-6.62607015e-34 ± 0.0 J s
+julia> measurement(μ_0)
+1.25663706212e-6 ± 1.9e-16 N A^-2
 
-julia> measurement(Float32, h)
-6.62607e-34 ± 0.0 J s
+julia> measurement(Float32, μ_0)
+1.256637e-6 ± 1.9e-16 N A^-2
 ```
 """
 measurement(::PhysicalConstant)
