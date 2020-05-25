@@ -1,0 +1,10 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
+PhysicalConstants = "5ad8b20f-a522-5ce9-bfc9-ddf1d5bda6ab"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+
+[compat]
+Documenter = "~0.24"
+Measurements = "2"
+Unitful = "1"
