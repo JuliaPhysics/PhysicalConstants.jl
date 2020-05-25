@@ -115,7 +115,7 @@ Macro to define a new [`PhysicalConstant`](@ref).
 
 The arguments are:
 
-* `name`: the full name of the constant, this will be the eported name of the constant
+* `name`: a symbol with the long name of the constant.  This symbol is automatically eported
 * `sym`: a non-exported alias for the constant
 * `descr`: a description of the constant
 * `val`: the numerical `Float64` value of the constant, in the reference units
@@ -183,7 +183,7 @@ Macro to define a new [`PhysicalConstant`](@ref) derived from another existing `
 
 The arguments are:
 
-* `name`: the full name of the constant, this will be the eported name of the constant
+* `name`: a symbol with the long name of the constant.  This symbol is automatically eported
 * `sym`: a non-exported alias for the constant
 * `descr`: a description of the constant
 * `val`: the numerical `Float64` value of the constant, in the reference units
@@ -251,16 +251,16 @@ julia> using PhysicalConstants.CODATA2018: G
 
 julia> G
 Newtonian constant of gravitation (G)
-Value                         = 6.67408e-11 m^3 kg^-1 s^-2
-Standard uncertainty          = 3.1e-15 m^3 kg^-1 s^-2
-Relative standard uncertainty = 4.6e-5
+Value                         = 6.6743e-11 m^3 kg^-1 s^-2
+Standard uncertainty          = 1.5e-15 m^3 kg^-1 s^-2
+Relative standard uncertainty = 2.2e-5
 Reference                     = CODATA 2018
 
 julia> float(G)
-6.67408e-11 m^3 kg^-1 s^-2
+6.6743e-11 m^3 kg^-1 s^-2
 
 julia> float(Float32, G)
-6.67408f-11 m^3 kg^-1 s^-2
+6.6743f-11 m^3 kg^-1 s^-2
 ```
 """
 float(::PhysicalConstant)
