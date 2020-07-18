@@ -105,5 +105,8 @@ _νx(T) = find_zero((_νf, _Dνf), T(_νx0), Roots.Newton())
                   ustrip(_νx(BigFloat) * big(k_B) / big(h)), Hz / K,
                   _νx0 * measurement(k_B) / measurement(h),
                   _νx(BigFloat) * measurement(BigFloat, k_B) / measurement(BigFloat, h), "CODATA 2018")
+@constant(CharacteristicImpedanceOfVacuum, Z_0, "Characteristic impedance of vacuum",
+          376.730_313_668, BigFloat(376_730_313_668)/BigFloat(1000_000_000), Ω, 5.7e-8,
+          BigFloat(57) / BigFloat(1000_000_000), "CODATA 2018")
 
 end # module CODATA2018
