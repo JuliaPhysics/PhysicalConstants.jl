@@ -1,9 +1,9 @@
 # PhysicalConstants.jl
 
-| **Documentation**                       | **Build Status**                          | **Code Coverage**               |
-|:---------------------------------------:|:-----------------------------------------:|:-------------------------------:|
-| [![][docs-stable-img]][docs-stable-url] | [![Build Status][travis-img]][travis-url] | [![][coveral-img]][coveral-url] |
-| [![][docs-latest-img]][docs-latest-url] | [![Build Status][appvey-img]][appvey-url] | [![][codecov-img]][codecov-url] |
+| **Documentation**                       | **Build Status**                    | **Code Coverage**               |
+|:---------------------------------------:|:-----------------------------------:|:-------------------------------:|
+| [![][docs-stable-img]][docs-stable-url] | [![Build Status][gha-img]][gha-url] | [![][coveral-img]][coveral-url] |
+| [![][docs-latest-img]][docs-latest-url] |                                     | [![][codecov-img]][codecov-url] |
 
 Introduction
 ------------
@@ -132,11 +132,8 @@ The original author is [Mosè Giordano](https://github.com/giordano/).
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://juliaphysics.github.io/PhysicalConstants.jl/stable/
 
-[travis-img]: https://travis-ci.org/JuliaPhysics/PhysicalConstants.jl.svg?branch=master
-[travis-url]: https://travis-ci.org/JuliaPhysics/PhysicalConstants.jl
-
-[appvey-img]: https://ci.appveyor.com/api/projects/status/ct2nx2t38hok2vy0?svg=true
-[appvey-url]: https://ci.appveyor.com/project/giordano/constants-jl
+[gha-img]: https://github.com/JuliaPhysics/PhysicalConstants.jl/workflows/CI/badge.svg
+[gha-url]: https://github.com/JuliaPhysics/PhysicalConstants.jl/actions?query=workflow%3ACI
 
 [coveral-img]: https://coveralls.io/repos/github/JuliaPhysics/PhysicalConstants.jl/badge.svg?branch=master
 [coveral-url]: https://coveralls.io/github/JuliaPhysics/PhysicalConstants.jl?branch=master
