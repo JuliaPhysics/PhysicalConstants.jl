@@ -4,6 +4,6 @@ Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
-Documenter = "~0.25"
+Documenter = "~0.27"
 Measurements = "2"
 Unitful = "1"
