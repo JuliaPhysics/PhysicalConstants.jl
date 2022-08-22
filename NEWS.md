@@ -1,14 +1,17 @@
-History of PhysicalConstants.jl
-===============================
+# History of PhysicalConstants.jl
 
-v0.2.1 (2020-05-25)
--------------------
+## v0.2.2 (2022-08-22)
+
+### New Features
+
+* Add characteristic impedance of vacuum to CODATA2018
+
+## v0.2.1 (2020-05-25)
 
 * Documentation available at
   https://juliaphysics.github.io/PhysicalConstants.jl/stable/
 
-v0.2.0 (2019-05-21)
--------------------
+## v0.2.0 (2019-05-21)
 
 ### New Features
 
@@ -21,8 +24,7 @@ v0.2.0 (2019-05-21)
 * Spelling of `CODATA2014.ElectricConstant` has been fixed
   ([#12](https://github.com/JuliaPhysics/PhysicalConstants.jl/pull/12))
 
-v0.1.0 (2019-03-30)
--------------------
+## v0.1.0 (2019-03-30)
 
 * Initial release.
 
