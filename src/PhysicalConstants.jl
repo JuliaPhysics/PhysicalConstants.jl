@@ -142,7 +142,7 @@ Reference                     = My lab notebook
 """
 macro constant(name, sym, descr, val, def, unit, unc, bigunc, reference)
     ename, qname, esym, qsym, eunit, _bigconvert = _constant_preamble(name, sym, unit, def)
-    tag = Measurements.tag_counters[Base.Threads.threadid()] += 1
+    tag = Threads.atomic_add!(Measurements.tag_counter, UInt64(1))
     quote
        $(_constant_begin(qname, ename, esym, eunit, val, _bigconvert))
 

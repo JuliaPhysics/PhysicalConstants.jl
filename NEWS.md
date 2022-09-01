@@ -1,5 +1,14 @@
 # History of PhysicalConstants.jl
 
+## v0.2.3 (2022-09-01)
+
+### Bug Fixes
+
+* Fixed compatibility issue with `Measurements.jl` v2.8.0 caused by this package
+  using internal functions non part of the public API
+  ([#24](https://github.com/JuliaPhysics/PhysicalConstants.jl/issues/24),
+  [#25](https://github.com/JuliaPhysics/PhysicalConstants.jl/pull/25)).
+
 ## v0.2.2 (2022-08-22)
 
 ### New Features
