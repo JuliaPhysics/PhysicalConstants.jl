@@ -47,24 +47,29 @@ end
 end
 
 @testset "Show" begin
+    function plain_repr(x)
+        io = IOBuffer()
+        show(io, "text/plain", x)
+        return String(take!(io))
+    end
     @test occursin(r"Speed of light in vacuum \(c_0\)
 Value                         = 2.99792458e8 m .*
 Standard uncertainty          = \(exact\)
 Relative standard uncertainty = \(exact\)
-Reference                     = CODATA 2014", repr(c_0))
-    @test repr(α) ==
+Reference                     = CODATA 2014", plain_repr(c_0))
+    @test plain_repr(α) ==
         "Fine-structure constant (α)
 Value                         = 0.0072973525664
 Standard uncertainty          = 1.7e-12
 Relative standard uncertainty = 2.3e-10
 Reference                     = CODATA 2014"
-    @test repr(e) ==
+    @test plain_repr(e) ==
         "Elementary charge (e)
 Value                         = 1.6021766208e-19 C
 Standard uncertainty          = 9.8e-28 C
 Relative standard uncertainty = 6.1e-9
 Reference                     = CODATA 2014"
-    @test repr(ħ) ==
+    @test plain_repr(ħ) ==
         "Planck constant over 2pi (ħ)
 Value                         = 1.0545718001391127e-34 J s
 Standard uncertainty          = 1.2891550390443523e-42 J s

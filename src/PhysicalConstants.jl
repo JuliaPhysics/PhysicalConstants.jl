@@ -71,7 +71,7 @@ function _constant_end(qname, ename, qsym, descr, val, reference, eunit)
         Unitful.unit(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}      = $eunit
         Unitful.dimension(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} = D
 
-        function Base.show(io::IO, x::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}
+        function Base.show(io::IO, ::MIME"text/plain", x::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}
             unc = uncertainty(ustrip(measurement($ename)))
             println(io, $descr, " (", $qsym, ")")
             println(io, "Value                         = ", float($ename))
