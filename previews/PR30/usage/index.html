@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Usage · PhysicalConstants</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">PhysicalConstants</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Introduction</a></li><li class="is-active"><a class="tocitem" href>Usage</a><ul class="internal"><li><a class="tocitem" href="#Usage"><span>Usage</span></a></li></ul></li><li><a class="tocitem" href="../constants/">List of Constants</a></li><li><a class="tocitem" href="../reference/">API Reference</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Usage</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Usage</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/JuliaPhysics/PhysicalConstants.jl/blob/master/docs/src/usage.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h2 id="Usage"><a class="docs-heading-anchor" href="#Usage">Usage</a><a id="Usage-1"></a><a class="docs-heading-anchor-permalink" href="#Usage" title="Permalink"></a></h2><p>You can load the package as usual with <code>using PhysicalConstants</code> but this module does not provide anything useful for the end-users.  You most probably want to directly load the submodule with the dataset you are interested in.  For example, for CODATA 2018 load <code>PhysicalConstants.CODATA2018</code>:</p><pre><code class="language-julia hljs">julia&gt; using PhysicalConstants.CODATA2018
+
+julia&gt; SpeedOfLightInVacuum
+Speed of light in vacuum (c_0)
+Value                         = 2.99792458e8 m s^-1
+Standard uncertainty          = (exact)
+Relative standard uncertainty = (exact)
+Reference                     = CODATA 2018
+
+julia&gt; NewtonianConstantOfGravitation
+Newtonian constant of gravitation (G)
+Value                         = 6.6743e-11 m^3 kg^-1 s^-2
+Standard uncertainty          = 1.5e-15 m^3 kg^-1 s^-2
+Relative standard uncertainty = 2.2e-5
+Reference                     = CODATA 2018</code></pre><p><code>SpeedOfLightInVacuum</code> and <code>NewtonianConstantOfGravitation</code> are two of the <code>PhysicalConstant</code>s defined in the <code>PhysicalConstants.CODATA2018</code> module, the full list of available constants is given below.</p><p><code>PhysicalConstant</code>s can be readily used in mathematical operations, using by default their <code>Float64</code> value:</p><pre><code class="language-julia hljs">julia&gt; import PhysicalConstants.CODATA2018: c_0, ε_0, μ_0
+
+julia&gt; 2 * ε_0
+1.77083756256e-11 F m^-1
+
+julia&gt; ε_0 - 1 / (μ_0 * c_0 ^ 2)
+-3.8450973786644646e-25 A^2 s^4 kg^-1 m^-3</code></pre><p>If you want to use a different precision for the value of the constant, use the function <code>float(float_type, constant)</code>, for example:</p><pre><code class="language-julia hljs">julia&gt; float(Float32, ε_0)
+8.854188f-12 F m^-1
+
+julia&gt; float(BigFloat, ε_0)
+8.854187812799999999999999999999999999999999999999999999999999999999999999999973e-12 F m^-1
+
+julia&gt; big(ε_0)
+8.854187812799999999999999999999999999999999999999999999999999999999999999999973e-12 F m^-1
+
+julia&gt; big(ε_0) - inv(big(μ_0) * big(c_0)^2)
+-3.849883307464075736533920296598236938395867709081184624499315166190408485179288e-25 A^2 s^4 kg^-1 m^-3</code></pre><p>Note that <code>big(constant)</code> is an alias for <code>float(BigFloat, constant)</code>.</p><p>If in addition to units you also want the standard uncertainty associated with the constant, use <code>measurement(x)</code>:</p><pre><code class="language-julia hljs">julia&gt; using Measurements
+
+julia&gt; import PhysicalConstants.CODATA2018: h, ħ
+
+julia&gt; measurement(ħ)
+1.0545718176461565e-34 ± 0.0 J s
+
+julia&gt; measurement(Float32, ħ)
+1.0545718e-34 ± 0.0 J s
+
+julia&gt; measurement(BigFloat, ħ)
+1.054571817646156391262428003302280744722826330020413122421923470598435912734741e-34 ± 0.0 J s
+
+julia&gt; measurement(BigFloat, ħ) / (measurement(BigFloat, h) / (2 * big(pi)))
+1.0 ± 0.0</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Introduction</a><a class="docs-footer-nextpage" href="../constants/">List of Constants »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Friday 5 July 2024 20:01">Friday 5 July 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
