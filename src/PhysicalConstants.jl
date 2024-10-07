@@ -29,12 +29,13 @@ _name(::PhysicalConstant{name,T,D,U}) where {name,T,D,U} = name
 
 # Functions composing the building blocks of the macros
 
-function _constant_preamble(name, sym, unit, def)
+function _constant_preamble(name, sym, unit, val, def)
     ename = esc(name)
     qname = esc(Expr(:quote, name))
     esym = esc(sym)
     qsym = esc(Expr(:quote, sym))
     eunit = esc(unit)
+    e_val = esc(val)
     _bigconvert = isa(def,Symbol) ? quote
         function _big(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}
             c = BigFloat()
@@ -45,25 +46,25 @@ function _constant_preamble(name, sym, unit, def)
     end : quote
         _big(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} = $(esc(def))
     end
-    return ename, qname, esym, qsym, eunit, _bigconvert
+    return ename, qname, esym, qsym, eunit, e_val, _bigconvert
 end
 
-function _constant_begin(qname, ename, esym, eunit, val, _bigconvert)
+function _constant_begin(qname, ename, esym, eunit, e_val, _bigconvert)
     quote
         const $ename = PhysicalConstant{gensym($qname),Float64,dimension($eunit),typeof($eunit)}()
         export $ename
         const $esym = $ename
 
-        Base.float(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} = $val * $eunit
+        Base.float(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} = $e_val * $eunit
         Base.float(FT::DataType, ::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} =
-            FT($val) * $eunit
+            FT($e_val) * $eunit
         $_bigconvert
         Base.big(x::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} = _big(x) * $eunit
         Base.float(::Type{BigFloat}, x::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} = big(x)
     end
 end
 
-function _constant_end(qname, ename, qsym, descr, val, reference, eunit)
+function _constant_end(qname, ename, qsym, edescr, e_val, ereference, eunit)
     quote
         Measurements.measurement(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} =
             measurement(Float64, $ename)
@@ -73,13 +74,13 @@ function _constant_end(qname, ename, qsym, descr, val, reference, eunit)
 
         function Base.show(io::IO, ::MIME"text/plain", x::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}
             unc = uncertainty(ustrip(measurement($ename)))
-            println(io, $descr, " (", $qsym, ")")
+            println(io, $edescr, " (", $qsym, ")")
             println(io, "Value                         = ", float($ename))
             println(io, "Standard uncertainty          = ",
                     iszero(unc) ? "(exact)" : unc * $eunit)
             println(io, "Relative standard uncertainty = ",
-                    iszero(unc) ? "(exact)" : round(unc / $val, sigdigits=2))
-            print(io,   "Reference                     = ", $reference)
+                    iszero(unc) ? "(exact)" : round(unc / $e_val, sigdigits=2))
+            print(io,   "Reference                     = ", $ereference)
         end
 
         @assert isa(ustrip(float($ename)), Float64)
@@ -141,29 +142,31 @@ Reference                     = My lab notebook
 ```
 """
 macro constant(name, sym, descr, val, def, unit, unc, bigunc, reference)
-    ename, qname, esym, qsym, eunit, _bigconvert = _constant_preamble(name, sym, unit, def)
+    ename, qname, esym, qsym, eunit, e_val, _bigconvert = _constant_preamble(name, sym, unit, val, def)
+    eunc = esc(unc)
+    ebigunc = esc(bigunc)
     tag = Threads.atomic_add!(Measurements.tag_counter, UInt64(1))
     quote
-       $(_constant_begin(qname, ename, esym, eunit, val, _bigconvert))
+       $(_constant_begin(qname, ename, esym, eunit, e_val, _bigconvert))
 
         function Measurements.measurement(FT::DataType,
                                           ::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}
-            vl = FT($val)
+            vl = FT($e_val)
             newder = Measurements.empty_der2(vl)
-            if iszero($unc)
-                return Measurement{FT}(vl, FT($unc), UInt64(0), newder) * $eunit
+            if iszero($eunc)
+                return Measurement{FT}(vl, FT($eunc), UInt64(0), newder) * $eunit
             else
-                return Measurement{FT}(vl, FT($unc), $tag,
+                return Measurement{FT}(vl, FT($eunc), $tag,
                                        Measurements.Derivatives(newder,
-                                                                (vl, $unc, $tag)=>one(FT))) * $eunit
+                                                                (vl, $eunc, $tag)=>one(FT))) * $eunit
             end
         end
         function Measurements.measurement(::Type{BigFloat},
                                           x::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}
             vl = _big(x)
-            unc = BigFloat($bigunc)
+            unc = BigFloat($ebigunc)
             newder = Measurements.empty_der2(vl)
-            if iszero($unc)
+            if iszero($eunc)
                 return Measurement{BigFloat}(vl, unc, UInt64(0), newder) * $eunit
             else
                 return Measurement{BigFloat}(vl, unc, $tag,
@@ -172,12 +175,12 @@ macro constant(name, sym, descr, val, def, unit, unc, bigunc, reference)
             end
         end
 
-        $(_constant_end(qname, ename, qsym, esc(descr), val, reference, eunit))
+        $(_constant_end(qname, ename, qsym, esc(descr), e_val, esc(reference), eunit))
     end
 end
 
 """
-    @derived_constant(name, sym, descr, val, def, unit, unc, bigunc, reference) -> PhysicalConstant
+    @derived_constant(name, sym, descr, val, def, unit, measure64, measurebig, reference) -> PhysicalConstant
 
 Macro to define a new [`PhysicalConstant`](@ref) derived from another existing `PhysicalConstant`.
 
@@ -221,9 +224,9 @@ Reference                     = My lab notebook
 ```
 """
 macro derived_constant(name, sym, descr, val, def, unit, measure64, measurebig, reference)
-    ename, qname, esym, qsym, eunit, _bigconvert = _constant_preamble(name, sym, unit, def)
+    ename, qname, esym, qsym, eunit, e_val, _bigconvert = _constant_preamble(name, sym, unit, val, def)
     quote
-        $(_constant_begin(qname, ename, esym, eunit, val, _bigconvert))
+        $(_constant_begin(qname, ename, esym, eunit, e_val, _bigconvert))
 
         Measurements.measurement(::Type{Float64},
                                  ::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} =
@@ -235,7 +238,7 @@ macro derived_constant(name, sym, descr, val, def, unit, measure64, measurebig, 
                                  x::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} =
                                      convert(Measurement{FT}, ustrip(measurement(x))) * $eunit
 
-        $(_constant_end(qname, ename, qsym, esc(descr), val, reference, eunit))
+        $(_constant_end(qname, ename, qsym, esc(descr), e_val, esc(reference), eunit))
     end
 end
 
