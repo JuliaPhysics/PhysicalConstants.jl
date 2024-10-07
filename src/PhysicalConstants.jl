@@ -180,7 +180,7 @@ macro constant(name, sym, descr, val, def, unit, unc, bigunc, reference)
 end
 
 """
-    @derived_constant(name, sym, descr, val, def, unit, unc, bigunc, reference) -> PhysicalConstant
+    @derived_constant(name, sym, descr, val, def, unit, measure64, measurebig, reference) -> PhysicalConstant
 
 Macro to define a new [`PhysicalConstant`](@ref) derived from another existing `PhysicalConstant`.
 
