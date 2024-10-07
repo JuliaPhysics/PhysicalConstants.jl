@@ -72,6 +72,8 @@ function _constant_end(qname, ename, qsym, edescr, e_val, ereference, eunit)
         Unitful.unit(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}      = $eunit
         Unitful.dimension(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} = D
 
+        PhysicalConstants.reference(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U} = $ereference
+
         function Base.show(io::IO, ::MIME"text/plain", x::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}
             unc = uncertainty(ustrip(measurement($ename)))
             println(io, $edescr, " (", $qsym, ")")
@@ -80,7 +82,7 @@ function _constant_end(qname, ename, qsym, edescr, e_val, ereference, eunit)
                     iszero(unc) ? "(exact)" : unc * $eunit)
             println(io, "Relative standard uncertainty = ",
                     iszero(unc) ? "(exact)" : round(unc / $e_val, sigdigits=2))
-            print(io,   "Reference                     = ", $ereference)
+            print(io,   "Reference                     = ", reference($ename))
         end
 
         @assert isa(ustrip(float($ename)), Float64)
@@ -124,7 +126,7 @@ The arguments are:
 * `unit`: the reference units
 * `unc`: the numerical `Float64` value of the uncertainty, in the reference units
 * `bigunc`: the expression to use to compute the uncertainty in any precision, in the reference units
-* `reference`: the name of the reference
+* `reference`: the name of the reference document that defines the constant
 
 ```jldoctest
 julia> using PhysicalConstants, Unitful
@@ -194,7 +196,7 @@ The arguments are:
 * `unit`: the reference units
 * `measure64`: the numerical `Measurement{Float64}` value of the constant, in the reference units
 * `measurebig`: the expression to use to compute the comstamt as a `Measurement{BigFloat}`, in the reference units
-* `reference`: the name of the reference
+* `reference`: the name of the reference document that defines the constant
 
 ```jldoctest
 julia> using PhysicalConstants, Unitful, Measurements
@@ -295,6 +297,29 @@ julia> measurement(Float32, μ_0)
 ```
 """
 measurement(::PhysicalConstant)
+
+"""
+    reference(::PhysicalConstant{name,T,D,U}) where {T,D,U}
+
+Return the reference defined for the physical constant.
+
+```jldoctest
+julia> using PhysicalConstants
+
+julia> using PhysicalConstants.CODATA2018: h
+
+julia> h
+Planck constant (h)
+Value                         = 6.62607015e-34 J s
+Standard uncertainty          = (exact)
+Relative standard uncertainty = (exact)
+Reference                     = CODATA 2018
+
+julia> PhysicalConstants.reference(h)
+"CODATA 2018"
+```
+"""
+function reference end
 
 include("promotion.jl")
 include("codata2014.jl")
