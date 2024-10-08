@@ -11,6 +11,8 @@ import PhysicalConstants.CODATA2014: α, atm, c_0, e, ε_0, h, ħ, µ_0
     @test isone(measurement(BigFloat, atm) / measurement(BigFloat, atm))
     @test iszero(measurement(BigFloat, ħ) - (measurement(BigFloat, h) / 2big(pi)))
     @test isone(measurement(BigFloat, ħ) / (measurement(BigFloat, h) / 2big(pi)))
+    @test PhysicalConstants.reference(PhysicalConstants.CODATA2014.G) == "CODATA 2014"
+    @test PhysicalConstants.reference(PhysicalConstants.CODATA2018.G) == "CODATA 2018"
 end
 
 @testset "Utils" begin
