@@ -40,41 +40,41 @@ _νx(T) = find_zero((_νf, _Dνf), T(_νx0), Roots.Newton())
           6.674_30e-11, BigFloat(6_674_30)/BigFloat(10_000_000_000_000_000), m^3 * kg^-1 * s^-2,
           1.5e-15, BigFloat(15)/BigFloat(10_000_000_000_000_000), "CODATA 2022")
 @constant(StandardAccelerationOfGravitation, g_n, "Standard acceleration of gravitation",
-          9.806_65, big(980_665)/big(100_000), m * s^-2, 0, 0, "CODATA 2018")
+          9.806_65, BigFloat(9_806_65)/BigFloat(100_000), m * s^-2, 0, 0, "CODATA 2022")
 @constant(PlanckConstant, h, "Planck constant", 6.626_070_15e-34,
-          6_626_070_15/1_000_000_000_000_000_000_000_000_000_000_000_000_000_000,
-          J * s, 0.0, BigFloat(0.0), "CODATA 2018")
+          BigFloat(6_626_070_15)/BigFloat(1_000_000_000_000_000_000_000_000_000_000_000_000_000_000),
+          J * s, 0.0, BigFloat(0.0), "CODATA 2022")
 @derived_constant(ReducedPlanckConstant, ħ, "Reduced Planck constant",
                   convert(Float64, ustrip(big(h))/(2 * big(pi))),
                   ustrip(big(h))/(2 * big(pi)), J * s,
-                  measurement(h)/2pi, measurement(BigFloat, h)/(2 * big(pi)), "CODATA 2018")
+                  measurement(h)/2pi, measurement(BigFloat, h)/(2 * big(pi)), "CODATA 2022")
 @constant(BoltzmannConstant, k_B, "Boltzmann constant", 1.380_649e-23,
           BigFloat(1_380_649)/BigFloat(100_000_000_000_000_000_000_000_000_000), J * K^-1,
-          0.0, BigFloat(0.0), "CODATA 2018")
-@constant(BohrMagneton, µ_B, "Bohr magneton", 9.274_010_0783e-24,
-          BigFloat(92_740_100_783)/BigFloat(10_000_000_000_000_000_000_000_000_000_000_000),
-          J * T^-1, 2.8e-33,
-          BigFloat(28)/BigFloat(100_00_000_000_000_000_000_000_000_000_000_000), "CODATA 2018")
-@constant(ElectronMass, m_e, "Electron mass", 9.109_383_7015e-31,
-          BigFloat(91_093_837_015)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000_000),
+          0.0, BigFloat(0.0), "CODATA 2022")
+@constant(BohrMagneton, µ_B, "Bohr magneton", 9.274_010_0657e-24,
+          BigFloat(9_274_010_065_7)/BigFloat(10_000_000_000_000_000_000_000_000_000_000_000),
+          J * T^-1, 2.9e-33,
+          BigFloat(29)/BigFloat(100_00_000_000_000_000_000_000_000_000_000_000), "CODATA 2022")
+@constant(ElectronMass, m_e, "Electron mass", 9.109_383_713_9e-31,
+          BigFloat(9_109_383_713_9)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000_000),
           kg, 2.8e-40,
           BigFloat(28)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000_000),
-          "CODATA 2018")
-@constant(NeutronMass, m_n, "Neutron mass", 1.674_927_498_04e-27,
-          BigFloat(167_492_749_804)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
-          kg, 9.5e-37,
-          BigFloat(95)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
-          "CODATA 2018")
-@constant(ProtonMass, m_p, "Proton mass", 1.672_621_923_69e-27,
-          BigFloat(167_262_192_369)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
-          kg, 5.1e-37,
-          BigFloat(51)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
-          "CODATA 2018")
-@constant(AtomicMassConstant, m_u, "Atomic mass constant", 1.660_539_066_60e-27,
-          BigFloat(166_053_906_660)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
-          kg, 5.0e-37,
-          BigFloat(50)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
-          "CODATA 2018")
+          "CODATA 2022")
+@constant(NeutronMass, m_n, "Neutron mass", 1.674_927_500_56e-27,
+          BigFloat(1_674_927_500_56)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
+          kg, 8.5e-37,
+          BigFloat(85)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
+          "CODATA 2022")
+@constant(ProtonMass, m_p, "Proton mass", 1.672_621_925_95e-27,
+          BigFloat(1_672_621_925_95)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
+          kg, 5.2e-37,
+          BigFloat(52)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
+          "CODATA 2022")
+@constant(AtomicMassConstant, m_u, "Atomic mass constant", 1.660_539_068_92e-27,
+          BigFloat(1_660_539_068_92)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
+          kg, 5.2e-37,
+          BigFloat(52)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
+          "CODATA 2022")
 @constant(AvogadroConstant, N_A, "Avogadro constant", 6.022_140_76e23,
           BigFloat(602_214_076_000_000_000_000_000), mol^-1,
           0.0, BigFloat(0.0), "CODATA 2018")
