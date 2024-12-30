@@ -17,28 +17,28 @@ const _νx0 = 2.8214393721220787
 _νx(T) = find_zero((_νf, _Dνf), T(_νx0), Roots.Newton())
 ## end
 
-@constant(FineStructureConstant, α, "Fine-structure constant", 7.297_352_5693e-3,
-          BigFloat(72_973_525_693)/BigFloat(10_000_000_000_000), Unitful.NoUnits,
-          1.1e-12, BigFloat(11)/BigFloat(10_000_000_000_000), "CODATA 2018")
-@constant(BohrRadius, a_0, "Bohr radius", 5.291_772_109_03e-11,
-          BigFloat(529_177_210_903)/BigFloat(10_000_000_000_000_000_000_000), m,
-          8e-21, BigFloat(80)/BigFloat(10_000_000_000_000_000_000_000), "CODATA 2018")
+@constant(FineStructureConstant, α, "Fine-structure constant", 7.297_352_564_3e-3,
+          BigFloat(7_297_352_564_3)/BigFloat(10_000_000_000_000), Unitful.NoUnits,
+          1.1e-12, BigFloat(11)/BigFloat(10_000_000_000_000), "CODATA 2022")
+@constant(BohrRadius, a_0, "Bohr radius", 5.291_772_105_44e-11,
+          BigFloat(5_291_772_105_44)/BigFloat(10_000_000_000_000_000_000_000), m,
+          8.2e-21, BigFloat(82)/BigFloat(10_000_000_000_000_000_000_000), "CODATA 2022")
 @constant(StandardAtmosphere, atm, "Standard atmosphere", 101_325.0, BigFloat(101_325), Pa,
-          0.0, BigFloat(0), "CODATA 2018")
+          0.0, BigFloat(0), "CODATA 2022")
 @constant(SpeedOfLightInVacuum, c_0, "Speed of light in vacuum", 299_792_458.0,
-          BigFloat(299_792_458.0), m / s, 0.0, BigFloat(0), "CODATA 2018")
-@constant(VacuumMagneticPermeability, µ_0, "Vacuum magnetic permeability", 1.256_637_062_12e-6,
-          BigFloat(125_663_706_212)/BigFloat(100_000_000_000_000_000), N * A^-2, 1.9e-16,
-          BigFloat(19)/BigFloat(100_000_000_000_000_000), "CODATA 2018")
-@constant(VacuumElectricPermittivity, ε_0, "Vacuum electric permittivity", 8.854_187_8128e-12,
-          BigFloat(88_541_878_128)/BigFloat(10_000_000_000_000_000_000_000), F * m^-1,
-          1.3e-21, BigFloat(13)/BigFloat(10_000_000_000_000_000_000_000), "CODATA 2018")
+          BigFloat(299_792_458.0), m / s, 0.0, BigFloat(0), "CODATA 2022")
+@constant(VacuumMagneticPermeability, µ_0, "Vacuum magnetic permeability", 1.256_637_061_27e-6,
+          BigFloat(1_256_637_061_27)/BigFloat(100_000_000_000_000_000), N * A^-2, 2.0e-16,
+          BigFloat(20)/BigFloat(100_000_000_000_000_000), "CODATA 2022")
+@constant(VacuumElectricPermittivity, ε_0, "Vacuum electric permittivity", 8.854_187_818_8e-12,
+          BigFloat(8_854_187_818_8)/BigFloat(10_000_000_000_000_000_000_000), F * m^-1,
+          1.4e-21, BigFloat(14)/BigFloat(10_000_000_000_000_000_000_000), "CODATA 2022")
 @constant(ElementaryCharge, e, "Elementary charge", 1.602_176_634e-19,
-          big(1_602_176_634)/big(10_000_000_000_000_000_000_000_000_000),
-          C, 0.0, BigFloat(0.0), "CODATA 2018")
+          BigFloat(1_602_176_634)/BigFloat(10_000_000_000_000_000_000_000_000_000),
+          C, 0.0, BigFloat(0.0), "CODATA 2022")
 @constant(NewtonianConstantOfGravitation, G, "Newtonian constant of gravitation",
-          6.674_30e-11, big(667_430)/big(10_000_000_000_000_000), m^3 * kg^-1 * s^-2,
-          1.5e-15, big(15)/big(10_000_000_000_000_000), "CODATA 2018")
+          6.674_30e-11, BigFloat(6_674_30)/BigFloat(10_000_000_000_000_000), m^3 * kg^-1 * s^-2,
+          1.5e-15, BigFloat(15)/BigFloat(10_000_000_000_000_000), "CODATA 2022")
 @constant(StandardAccelerationOfGravitation, g_n, "Standard acceleration of gravitation",
           9.806_65, big(980_665)/big(100_000), m * s^-2, 0, 0, "CODATA 2018")
 @constant(PlanckConstant, h, "Planck constant", 6.626_070_15e-34,
