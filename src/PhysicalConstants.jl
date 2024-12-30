@@ -324,5 +324,6 @@ function reference end
 include("promotion.jl")
 include("codata2014.jl")
 include("codata2018.jl")
+include("codata2022.jl")
 
 end # module
