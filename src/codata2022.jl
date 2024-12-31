@@ -76,40 +76,40 @@ _νx(T) = find_zero((_νf, _Dνf), T(_νx0), Roots.Newton())
           BigFloat(52)/BigFloat(100_000_000_000_000_000_000_000_000_000_000_000_000),
           "CODATA 2022")
 @constant(AvogadroConstant, N_A, "Avogadro constant", 6.022_140_76e23,
-          BigFloat(602_214_076_000_000_000_000_000), mol^-1,
-          0.0, BigFloat(0.0), "CODATA 2018")
+          BigFloat(6_022_140_760_000_000_000_000_00), mol^-1,
+          0.0, BigFloat(0.0), "CODATA 2022")
 @derived_constant(MolarGasConstant, R, "Molar gas constant",
                   convert(Float64, ustrip(big(N_A) * big(k_B))),
                   ustrip(big(N_A) * big(k_B)), J * mol^-1 * K^-1,
                   measurement(N_A) * measurement(k_B),
-                  measurement(BigFloat, N_A) * measurement(BigFloat, k_B), "CODATA 2018")
-@constant(RydbergConstant, R_∞, "Rydberg constant", 10_973_731.568_160,
-          BigFloat(10_973_731_568_160)/BigFloat(1_000_000), m^-1,
-          2.1e-5, BigFloat(21)/BigFloat(1_000_000), "CODATA 2018")
+                  measurement(BigFloat, N_A) * measurement(BigFloat, k_B), "CODATA 2022")
+@constant(RydbergConstant, R_∞, "Rydberg constant", 10_973_731.568_157,
+          BigFloat(10_973_731_568_157)/BigFloat(1_000_000), m^-1,
+          1.2e-5, BigFloat(12)/BigFloat(1_000_000), "CODATA 2022")
 @derived_constant(StefanBoltzmannConstant, σ, "Stefan-Boltzmann constant",
                   convert(Float64, ustrip(2 * big(pi)^5 * big(k_B)^4 / (15 * big(h)^3 * big(c_0)^2))),
                   ustrip(2 * big(pi) ^ 5 * big(k_B) ^ 4 / (15 * big(h) ^ 3 * big(c_0) ^ 2)), W * m^-2 * K^-4,
                   (2 * pi ^ 5 * measurement(k_B) ^ 4) / (15 * measurement(h) ^ 3 * measurement(c_0) ^ 2),
                   (2 * big(pi) ^ 5 * measurement(BigFloat, k_B) ^ 4) / (15 * measurement(BigFloat, h) ^ 3 * measurement(BigFloat, c_0) ^ 2),
-                  "CODATA 2018")
-@constant(ThomsonCrossSection, σ_e, "Thomson cross section", 6.652_458_7321e-29,
-          BigFloat(66_524_587_321)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000_000),
-          m^2, 6.0e-38,
-          BigFloat(60)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000_000),
-          "CODATA 2018")
+                  "CODATA 2022")
+@constant(ThomsonCrossSection, σ_e, "Thomson cross section", 6.652_458_705_1e-29,
+          BigFloat(6_652_458_705_1)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000_000),
+          m^2, 6.2e-38,
+          BigFloat(62)/BigFloat(1000_000_000_000_000_000_000_000_000_000_000_000_000),
+          "CODATA 2022")
 @derived_constant(WienWavelengthDisplacementLawConstant, b, "Wien wavelength displacement law constant",
                   convert(Float64, ustrip(big(h) * big(c_0) / (_λx(BigFloat) * big(k_B)))),
                   ustrip(big(h) * big(c_0) / (_λx(BigFloat) * big(k_B))), m * K,
                   measurement(h) * measurement(c_0) / (_λx0 * measurement(k_B)),
                   measurement(BigFloat, h) * measurement(BigFloat, c_0) / (_λx(BigFloat) * measurement(BigFloat, k_B)),
-                  "CODATA 2018")
+                  "CODATA 2022")
 @derived_constant(WienFrequencyDisplacementLawConstant, b′, "Wien frequency displacement law constant",
                   convert(Float64, ustrip(_νx(BigFloat) * big(k_B) / big(h))),
                   ustrip(_νx(BigFloat) * big(k_B) / big(h)), Hz / K,
                   _νx0 * measurement(k_B) / measurement(h),
-                  _νx(BigFloat) * measurement(BigFloat, k_B) / measurement(BigFloat, h), "CODATA 2018")
+                  _νx(BigFloat) * measurement(BigFloat, k_B) / measurement(BigFloat, h), "CODATA 2022")
 @constant(CharacteristicImpedanceOfVacuum, Z_0, "Characteristic impedance of vacuum",
-          376.730_313_668, BigFloat(376_730_313_668)/BigFloat(1000_000_000), Ω, 5.7e-8,
-          BigFloat(57) / BigFloat(1000_000_000), "CODATA 2018")
+          376.730_313_412, BigFloat(376_730_313_412)/BigFloat(1_000_000_000), Ω, 5.9e-8,
+          BigFloat(59) / BigFloat(1_000_000_000), "CODATA 2022")
 
 end # module CODATA2022
