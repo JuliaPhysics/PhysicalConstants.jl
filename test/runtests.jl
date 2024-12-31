@@ -13,6 +13,7 @@ import PhysicalConstants.CODATA2014: α, atm, c_0, e, ε_0, h, ħ, µ_0
     @test isone(measurement(BigFloat, ħ) / (measurement(BigFloat, h) / 2big(pi)))
     @test PhysicalConstants.reference(PhysicalConstants.CODATA2014.G) == "CODATA 2014"
     @test PhysicalConstants.reference(PhysicalConstants.CODATA2018.G) == "CODATA 2018"
+    @test PhysicalConstants.reference(PhysicalConstants.CODATA2022.G) == "CODATA 2022"
 end
 
 @testset "Utils" begin
@@ -34,7 +35,8 @@ end
 
 @testset "Maths" begin
     @testset "$cst" for cst in (PhysicalConstants.CODATA2014,
-                                PhysicalConstants.CODATA2018)
+                                PhysicalConstants.CODATA2018,
+                                PhysicalConstants.CODATA2022)
         @test cst.α ≈ @inferred(cst.e^2/(4 * cst.pi * cst.ε_0 * cst.ħ * cst.c_0))
         @test @inferred(cst.α + 2) ≈ 2 + float(cst.α)
         @test @inferred(5 + cst.α) ≈ float(cst.α) + 5
