@@ -5,13 +5,13 @@
 [`PhysicalConstants.jl`](https://github.com/JuliaPhysics/PhysicalConstants.jl)
 provides common physical constants.  They are defined as instances of the new
 `Constant` type, which is subtype of `AbstractQuantity` (from
-[`Unitful.jl`](https://github.com/ajkeller34/Unitful.jl) package) and can also
+[`Unitful.jl`](https://github.com/PainterQubits/Unitful.jl) package) and can also
 be turned into `Measurement` objects (from
 [`Measurements.jl`](https://github.com/JuliaPhysics/Measurements.jl) package) at
 request.
 
 Constants are grouped into different submodules, so that the user can choose
-different datasets as needed.  Currently, 2014 and 2018 editions of
+different datasets as needed.  Currently, 2014, 2018, and 2022 editions of
 [CODATA](https://physics.nist.gov/cuu/Constants/) recommended values of the
 fundamental physical constants are provided.
 
