@@ -5,7 +5,7 @@ does not provide anything useful for the end-users.  You most probably want to
 directly load the submodule with the dataset you are interested in.  For
 example, for CODATA 2022 load `PhysicalConstants.CODATA2022`:
 
-```julia
+```jldoctest
 julia> using PhysicalConstants.CODATA2022
 
 julia> SpeedOfLightInVacuum
@@ -30,7 +30,7 @@ full list of available constants is given below.
 `PhysicalConstant`s can be readily used in mathematical operations, using by
 default their `Float64` value:
 
-```julia
+```jldoctest
 julia> import PhysicalConstants.CODATA2022: c_0, ε_0, μ_0
 
 julia> 2 * ε_0
@@ -43,7 +43,7 @@ julia> ε_0 - 1 / (μ_0 * c_0 ^ 2)
 If you want to use a different precision for the value of the constant, use the
 function `float(float_type, constant)`, for example:
 
-```julia
+```jldoctest
 julia> float(Float32, ε_0)
 8.854188f-12 F m^-1
 
@@ -62,7 +62,7 @@ Note that `big(constant)` is an alias for `float(BigFloat, constant)`.
 If in addition to units you also want the standard uncertainty associated with
 the constant, use `measurement(x)`:
 
-```julia
+```jldoctest
 julia> using Measurements
 
 julia> import PhysicalConstants.CODATA2022: h, ħ
