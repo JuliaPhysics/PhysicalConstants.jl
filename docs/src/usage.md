@@ -44,6 +44,8 @@ If you want to use a different precision for the value of the constant, use the
 function `float(float_type, constant)`, for example:
 
 ```jldoctest
+julia> import PhysicalConstants.CODATA2022: c_0, ε_0, μ_0
+
 julia> float(Float32, ε_0)
 8.854188f-12 F m^-1
 
