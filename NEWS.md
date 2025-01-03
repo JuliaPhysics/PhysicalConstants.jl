@@ -1,6 +1,6 @@
 # History of PhysicalConstants.jl
 
-## v0.2.4 (2025-01-02)
+## v0.2.4 (2025-01-03)
 
 ### New Features
 
