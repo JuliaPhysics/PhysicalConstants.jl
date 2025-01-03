@@ -1,4 +1,5 @@
 using Documenter, PhysicalConstants, Unitful
+using PhysicalConstants: CODATA2014, CODATA2018, CODATA2022
 
 ## Generate list of constants
 open(joinpath(@__DIR__, "src", "constants.md"), "w") do io
@@ -15,7 +16,7 @@ open(joinpath(@__DIR__, "src", "constants.md"), "w") do io
                   use most frequently, as shown in the examples above.
               """
           )
-    for set in (PhysicalConstants.CODATA2014, PhysicalConstants.CODATA2018)
+    for set in (CODATA2014, CODATA2018, CODATA2022)
         println(io)
         println(io, "### ", nameof(set))
         println(io)

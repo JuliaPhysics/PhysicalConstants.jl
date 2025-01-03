@@ -252,14 +252,14 @@ Return the physical constant as a `Quantity` with the floating type optionally s
 `FloatType`, `Float64` by default.
 
 ```jldoctest
-julia> using PhysicalConstants.CODATA2018: G
+julia> using PhysicalConstants.CODATA2022: G
 
 julia> G
 Newtonian constant of gravitation (G)
 Value                         = 6.6743e-11 m^3 kg^-1 s^-2
 Standard uncertainty          = 1.5e-15 m^3 kg^-1 s^-2
 Relative standard uncertainty = 2.2e-5
-Reference                     = CODATA 2018
+Reference                     = CODATA 2022
 
 julia> float(G)
 6.6743e-11 m^3 kg^-1 s^-2
@@ -278,22 +278,22 @@ Return the physical constant as a `Quantity` with standard uncertainty.  The flo
 precision can be optionally specified with the `FloatType`, `Float64` by default.
 
 ```jldoctest
-julia> using PhysicalConstants.CODATA2018, Measurements
+julia> using PhysicalConstants.CODATA2022, Measurements
 
-julia> import PhysicalConstants.CODATA2018: μ_0
+julia> import PhysicalConstants.CODATA2022: μ_0
 
 julia> μ_0
 Vacuum magnetic permeability (μ_0)
-Value                         = 1.25663706212e-6 N A^-2
-Standard uncertainty          = 1.9e-16 N A^-2
-Relative standard uncertainty = 1.5e-10
-Reference                     = CODATA 2018
+Value                         = 1.25663706127e-6 N A^-2
+Standard uncertainty          = 2.0e-16 N A^-2
+Relative standard uncertainty = 1.6e-10
+Reference                     = CODATA 2022
 
 julia> measurement(μ_0)
-1.25663706212e-6 ± 1.9e-16 N A^-2
+1.25663706127e-6 ± 2.0e-16 N A^-2
 
 julia> measurement(Float32, μ_0)
-1.256637e-6 ± 1.9e-16 N A^-2
+1.256637e-6 ± 2.0e-16 N A^-2
 ```
 """
 measurement(::PhysicalConstant)
@@ -306,17 +306,17 @@ Return the reference defined for the physical constant.
 ```jldoctest
 julia> using PhysicalConstants
 
-julia> using PhysicalConstants.CODATA2018: h
+julia> using PhysicalConstants.CODATA2022: h
 
 julia> h
 Planck constant (h)
 Value                         = 6.62607015e-34 J s
 Standard uncertainty          = (exact)
 Relative standard uncertainty = (exact)
-Reference                     = CODATA 2018
+Reference                     = CODATA 2022
 
 julia> PhysicalConstants.reference(h)
-"CODATA 2018"
+"CODATA 2022"
 ```
 """
 function reference end
@@ -324,5 +324,6 @@ function reference end
 include("promotion.jl")
 include("codata2014.jl")
 include("codata2018.jl")
+include("codata2022.jl")
 
 end # module
