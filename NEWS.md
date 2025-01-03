@@ -1,5 +1,17 @@
 # History of PhysicalConstants.jl
 
+## v0.2.4 (2025-01-02)
+
+### New Features
+
+* New set `CODATA2022` added in module `PhysicalConstants.CODATA2022`
+  ([#34](https://github.com/JuliaPhysics/PhysicalConstants.jl/issues/34),
+  [#39](https://github.com/JuliaPhysics/PhysicalConstants.jl/pull/39)).
+* New function `PhysicalConstants.reference` to access the reference of a
+  constant
+  ([#35](https://github.com/JuliaPhysics/PhysicalConstants.jl/issues/35),
+  [#37](https://github.com/JuliaPhysics/PhysicalConstants.jl/pull/37)).
+
 ## v0.2.3 (2022-09-01)
 
 ### Bug Fixes
