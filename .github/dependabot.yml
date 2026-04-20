@@ -12,7 +12,7 @@ updates:
     schedule:
       interval: "monthly"
     ignore:
-      - depedency-name: "PhysicalConstants" # Ignore package itself
+      - dependency-name: "PhysicalConstants" # Ignore package itself
     labels:
       - "dependencies 🖇️"
     groups:
