@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         julia-version:
-          - "1.0"
+          - "min"
           - "1"
           - "nightly"
         os:
@@ -23,11 +23,14 @@ jobs:
           - macos-latest
           - windows-latest
         julia-arch:
-          - x64
+          - default
+        exclude:
+          - os: macos-latest
+            julia-version: "min"
 
     steps:
       - uses: actions/checkout@v6
-      - uses: julia-actions/setup-julia@v2
+      - uses: julia-actions/setup-julia@v3
         with:
           version: ${{ matrix.julia-version }}
           arch: ${{ matrix.julia-arch }}
@@ -47,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: julia-actions/setup-julia@v2
+      - uses: julia-actions/setup-julia@v3
         with:
           version: 1
       - uses: julia-actions/cache@v3
