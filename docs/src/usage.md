@@ -25,7 +25,7 @@ Reference                     = CODATA 2022
 
 `SpeedOfLightInVacuum` and `NewtonianConstantOfGravitation` are two of the
 `PhysicalConstant`s defined in the `PhysicalConstants.CODATA2022` module, the
-full list of available constants is given in the [next section](https://juliaphysics.github.io/PhysicalConstants.jl/stable/constants/).
+full list of available constants is given in [List of Set of Constants](@ref).
 
 `PhysicalConstant`s can be readily used in mathematical operations, using by
 default their `Float64` value:
