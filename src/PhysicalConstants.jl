@@ -5,6 +5,9 @@ using Measurements, Unitful
 import Measurements: value, uncertainty
 import Unitful: AbstractQuantity
 
+# `Base.MPFR.libmpfr` was added in Julia 1.9
+const libmpfr = isdefined(Base.MPFR, :libmpfr) ? Base.MPFR.libmpfr : :libmpfr
+
 # The type
 
 """
@@ -39,7 +42,7 @@ function _constant_preamble(name, sym, unit, val, def)
     _bigconvert = isa(def,Symbol) ? quote
         function _big(::PhysicalConstant{_name($ename),T,D,U}) where {T,D,U}
             c = BigFloat()
-            ccall(($(string("mpfr_const_", def)), :libmpfr),
+            ccall(($(string("mpfr_const_", def)), $libmpfr),
                   Cint, (Ref{BigFloat}, Int32), c, MPFR.ROUNDING_MODE[])
             return c
         end
